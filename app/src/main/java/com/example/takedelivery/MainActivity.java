@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 abrirBegin();
             }
-        }, 5000);
+        }, 1000);
 
     }
 

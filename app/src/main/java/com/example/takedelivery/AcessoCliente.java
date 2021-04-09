@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -35,7 +34,7 @@ public class AcessoCliente extends AppCompatActivity {
 
     }
 
-    public void logarUsuario(UsuarioApp usuario) {
+    public void logarUsuario(Cliente usuario) {
 
         autenticar.signInWithEmailAndPassword(
                 usuario.getEmail(), usuario.getSenha()
@@ -76,7 +75,7 @@ public class AcessoCliente extends AppCompatActivity {
         if (!textoEmail.isEmpty()) {
             if (!textoSenha.isEmpty()) {
 
-                UsuarioApp usuario = new UsuarioApp();
+                Cliente usuario = new Cliente();
                 usuario.setEmail(textoEmail);
                 usuario.setSenha(textoSenha);
 
@@ -101,7 +100,7 @@ public class AcessoCliente extends AppCompatActivity {
     }
 
     public void abrirTelaPrincipal() {
-        Intent intent = new Intent(AcessoCliente.this, Cliente.class);
+        Intent intent = new Intent(AcessoCliente.this, Begin.class);
         startActivity(intent);
     }
 

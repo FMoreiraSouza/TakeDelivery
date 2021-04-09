@@ -9,14 +9,15 @@
     <LinearLayout
         android:id="@+id/linearLayout9"
         android:layout_width="319dp"
-        android:layout_height="533dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="25dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
         app:layout_constraintVertical_bias="0.873">
 
         <TextView
@@ -42,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName|textPassword" />
+            android:inputType="textPassword|textEmailAddress" />
 
         <TextView
             android:id="@+id/textView2"
@@ -55,21 +56,78 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Telefone" />
+
+        <EditText
+            android:id="@+id/editTelefoneCli"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Endereço" />
+
+        <EditText
+            android:id="@+id/editEnderecoCli"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bairro" />
+
+        <EditText
+            android:id="@+id/editBairroCli"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cidade" />
+
+        <EditText
+            android:id="@+id/editCidadeCli"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
             android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/buttonCadastrarCli"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="validarCadastroUsuario"
             android:text="Cadastrar" />
 
     </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="125dp"
-        android:layout_height="122dp"
-        app:srcCompat="@drawable/client"
-        tools:layout_editor_absoluteX="143dp"
-        tools:layout_editor_absoluteY="30dp" />
+        android:layout_width="88dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="21dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/client" />
 </androidx.constraintlayout.widget.ConstraintLayout>

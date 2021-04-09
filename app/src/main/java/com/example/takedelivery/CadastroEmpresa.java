@@ -1,121 +1,152 @@
 package com.example.takedelivery;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.os.Bundle;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
-import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CadastroEmpresa extends AppCompatActivity {
 
-    private TextInputEditText Nome, Email, Senha;
-    private FirebaseAuth autenticacao;
+    EditText editTextCnpj;
+    EditText editTextNomeFantasia;
+    EditText editTextTelefone;
+    EditText editTextCep;
+    EditText editTextEstado;
+    EditText editTextCidade;
+    EditText editTextBairro;
+    EditText editTextEndereco;
+    EditText editTextNumero;
 
+    ArrayList<Empresa> empresas = new ArrayList<>();
+    private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance ();
+    private DatabaseReference mDatabaseReference = mDatabase.getReference ();
+    boolean edit;
+    int idProdutoEditar;
+    String selecteditem;
+    public static Empresa empresa;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inicial_empresa);
-
-        Nome = findViewById(R.id.editNome);
-        Email = findViewById(R.id.editEmail);
-        Senha = findViewById(R.id.editSenha);
-
-    }
-
-    public void cadastrarUsuario(UsuarioApp usuario){
-
-        autenticacao = FirebaseItems.getFirebaseAutenticacao();
-        autenticacao.createUserWithEmailAndPassword(
-                usuario.getEmail(), usuario.getSenha()
-        ).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-
-                if ( task.isSuccessful() ){
-                    Toast.makeText(CadastroUsuario.this, "Sucesso ao cadastrar",
-                            Toast.LENGTH_SHORT).show();
-                    finish();
-
-                    try {
-
-                        String identificadorUsuario = CryptographyBase64.codificarBase64( usuario.getEmail() );
-                        usuario.setID( identificadorUsuario );
-                        usuario.salvar();
-
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
+        setContentView(R.layout.activity_cadastro_empresa);
 
 
-                }else {
 
-                    String excecao = "";
-                    try {
-                        throw task.getException();
-                    } catch (FirebaseAuthWeakPasswordException e) {
-                        excecao = "Digite uma senha mais forte!";
-                    } catch (FirebaseAuthInvalidCredentialsException e) {
-                        excecao = "Digite um e-mail válido";
-                    } catch (FirebaseAuthUserCollisionException e) {
-                        excecao = "Esta conta existe";
-                    } catch (Exception e) {
-                        excecao = "Erro ao cadastrar: " + e.getMessage();
-                        e.printStackTrace();
-                    }
-                    Toast.makeText(CadastroUsuario.this,
-                            excecao,
-                            Toast.LENGTH_SHORT).show();
 
-                }
-            }
+        empresa = CadastroEmpresa.empresa;
 
-        });
-    }
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
 
-    public void validarCadastroUsuario(View view){
+        List<String> categorias = new ArrayList<String>();
 
-        String textoNome  = Nome.getText().toString();
-        String textoEmail = Email.getText().toString();
-        String textoSenha = Senha.getText().toString();
-
-        if( !textoNome.isEmpty() ){
-            if( !textoEmail.isEmpty() ){
-                if ( !textoSenha.isEmpty() ){
-
-                    UsuarioApp usuario = new UsuarioApp();
-                    usuario.setNome( textoNome );
-                    usuario.setEmail( textoEmail );
-                    usuario.setSenha( textoSenha );
-
-                    cadastrarUsuario( usuario );
-
-                }else {
-                    Toast.makeText(CadastroUsuario.this,
-                            "Preencha a senha",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }else {
-                Toast.makeText(CadastroUsuario.this,
-                        "Preencha o email",
-                        Toast.LENGTH_SHORT).show();
-            }
-        }else {
-            Toast.makeText(CadastroUsuario.this,
-                    "Preencha o nome",
-                    Toast.LENGTH_SHORT).show();
+        for (Categoria categoria: Categoria.values()){
+            categorias.add(categoria.getDescricao());
         }
 
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categorias);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinner.setAdapter(dataAdapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView adapter, View v, int i, long lng) {
+                selecteditem =  adapter.getItemAtPosition(i).toString();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView)
+            {
+
+            }
+        });
+        //getEmpresas();
     }
 
+//    public void cancelar( View view ){
+//        setResult( Constants.RESULT_CANCEL );
+//        setResult( Constants.RESULT_CANCEL );
+//        finish();
+//    }
+//
+
+
+    public void cadastrar( View view ){
+        editTextCnpj = findViewById( R.id.editTextCNPJ );
+        editTextNomeFantasia = findViewById( R.id.editTextNomeFantasia );
+        editTextTelefone = findViewById( R.id.editTextTelefone );
+        editTextCep = findViewById( R.id.editTextCEP );
+        editTextEstado = findViewById( R.id.editTextEstado );
+        editTextCidade = findViewById( R.id.editTextCidade );
+        editTextBairro = findViewById( R.id.editTextBairro );
+        editTextEndereco = findViewById( R.id.editTextEndereco );
+        editTextNumero = findViewById( R.id.editTextNumero );
+
+        String cnpj = editTextCnpj.getText().toString();;
+        String nomeFantasia = editTextNomeFantasia.getText().toString();;
+        String telefone = editTextTelefone.getText().toString();;
+        String cep = editTextCep.getText().toString();;
+        String estado = editTextEstado.getText().toString();;
+        String cidade = editTextCidade.getText().toString();;
+        String bairro = editTextBairro.getText().toString();;
+        String endereco = editTextEndereco.getText().toString();;
+        String numero = editTextNumero.getText().toString();
+
+        empresa.setCnpj(cnpj);
+        empresa.setNomeFantasia(nomeFantasia);
+        empresa.setTelefone(telefone);
+        empresa.setCep(cep);
+        empresa.setEstado(estado);
+        empresa.setCidade(cidade);
+        empresa.setBairro(bairro);
+        empresa.setEndereco(endereco);
+        empresa.setNumero(numero);
+
+        empresa.salvarEmpresa();
+
+        Toast.makeText(CadastroEmpresa.this, "Sucesso ao cadastrar",
+                Toast.LENGTH_SHORT).show();
+        paginaEmpresa();
+        //new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                paginaEmpresa();
+//            }
+//        }, 5000);
+    }
+    private void paginaEmpresa() {
+        Intent intent = new Intent( this, AcessoEmpresa.class );
+        startActivity(intent);
+    }
 
 }

@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TakeDelivery">
-        <activity android:name=".Empresa"></activity>
-        <activity android:name=".Cliente" />
-        <activity android:name=".CadastroEmpresa" />
+        <activity android:name=".CadastroEmpresa"></activity>
+        <activity android:name=".Empresa" />
+        <activity android:name=".Cliente1" />
+        <activity android:name=".CadastroInicialEmpresa" />
         <activity android:name=".CadastroCliente" />
         <activity android:name=".AcessoEmpresa" />
         <activity android:name=".AcessoCliente" />
