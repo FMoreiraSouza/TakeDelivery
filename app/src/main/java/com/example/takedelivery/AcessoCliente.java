@@ -100,7 +100,7 @@ public class AcessoCliente extends AppCompatActivity {
     }
 
     public void abrirTelaPrincipal() {
-        Intent intent = new Intent(AcessoCliente.this, Begin.class);
+        Intent intent = new Intent(AcessoCliente.this, Cliente.class);
         startActivity(intent);
     }
 

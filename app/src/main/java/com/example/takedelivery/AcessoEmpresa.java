@@ -100,7 +100,7 @@ public class AcessoEmpresa extends AppCompatActivity {
     }
 
     public void abrirTelaPrincipal() {
-        Intent intent = new Intent(AcessoEmpresa.this, Begin.class);
+        Intent intent = new Intent(AcessoEmpresa.this, Empresa.class);
         startActivity(intent);
     }
 

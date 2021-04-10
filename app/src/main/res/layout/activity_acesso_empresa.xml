@@ -51,27 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <Switch
-                    android:id="@+id/switch1"
-                    android:layout_width="20dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Cliente" />
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:paddingStart="12dp"
-                    android:paddingTop="4dp"
-                    android:text="Empresa"
-                    android:textAllCaps="false"
-                    android:textColor="#0C0C0C"
-                    android:textIsSelectable="false" />
-            </LinearLayout>
+                android:orientation="horizontal"/>
 
             <Button
                 android:id="@+id/button"
