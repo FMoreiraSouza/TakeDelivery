@@ -42,8 +42,6 @@ public class PedidosEmpresaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedidos_empresa);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
 
         if( getIntent().getExtras() != null ){
@@ -66,7 +64,7 @@ public class PedidosEmpresaActivity extends AppCompatActivity {
         listViewPedidos.setSelector(R.color.corSelect);
 
 
-        listViewPedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listViewPedidos.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
@@ -105,7 +103,7 @@ public class PedidosEmpresaActivity extends AppCompatActivity {
                     }
                 }
                 buscarClientes();
-                buscarProdutos();
+//                buscarProdutos();
                 adapter.notifyDataSetChanged();
             }
 

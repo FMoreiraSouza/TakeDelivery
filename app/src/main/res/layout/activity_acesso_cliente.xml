@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:backgroundTint="#F7F7F7"
-    tools:context=".AcessoCliente">
+    tools:context=".acesso.AcessoCliente">
 
     <LinearLayout
         android:id="@+id/linearLayout"

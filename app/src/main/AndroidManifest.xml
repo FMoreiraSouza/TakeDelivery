@@ -32,13 +32,21 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"></activity>
-        <activity android:name=".CadastroEmpresa" />
-        <activity android:name=".Empresa" />
-        <activity android:name=".Cliente1" />
-        <activity android:name=".CadastroInicialEmpresa" />
-        <activity android:name=".CadastroCliente" />
-        <activity android:name=".AcessoEmpresa" />
-        <activity android:name=".AcessoCliente" />
+        <activity android:name=".Empresa.CadastroEmpresa" />
+
+        <activity android:name=".Empresa.EmpresaActivity" />
+        <activity android:name=".cliente.ClienteActivity" />
+        <activity android:name=".Empresa.CadastroInicialEmpresa" />
+        <activity android:name=".Empresa.CardapioEmpresaActivity" />
+        <activity android:name=".cliente.AdicionaProdutoCarrinhoActivity" />
+        <activity android:name=".cliente.CarrinhoActivity" />
+
+        <activity android:name=".cliente.CardapioActivity" />
+
+        <activity android:name=".Empresa.CadastroProdutoActivity" />
+        <activity android:name=".cliente.CadastroCliente" />
+        <activity android:name=".acesso.AcessoEmpresa" />
+        <activity android:name=".acesso.AcessoCliente" />
         <activity android:name=".Escolha" />
         <activity android:name=".Begin" />
         <activity android:name=".MainActivity">
