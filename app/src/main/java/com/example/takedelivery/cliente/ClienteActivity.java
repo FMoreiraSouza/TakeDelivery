@@ -44,7 +44,7 @@ public class ClienteActivity extends AppCompatActivity {
     private ValueEventListener valueEventListenerEmpresas;
     private ValueEventListener valueEventListenerCliente;
     Cliente cliente;
-    Carrinho carrinho;
+    Carrinho carrinho = new Carrinho();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,8 +133,8 @@ public class ClienteActivity extends AppCompatActivity {
     }
     public void abrirCarrinho(){
         Intent intent = new Intent(this, CarrinhoActivity.class);
-//        CarrinhoActivity.empresa = empresa;
-
+        intent.putExtra("carrinho", carrinho);
+        intent.putExtra("cliente", cliente);
 
         startActivity(intent);
     }
@@ -179,10 +179,6 @@ public class ClienteActivity extends AppCompatActivity {
                     empresas.add(empresa);
 
                 }
-//                if(!cardapio.isEmpty()){
-//                    TextView textView = (TextView) findViewById(R.id.textView15);
-//                    ((ViewGroup)textView.getParent()).removeView(textView);
-//                }
                 adapter.notifyDataSetChanged();
             }
 

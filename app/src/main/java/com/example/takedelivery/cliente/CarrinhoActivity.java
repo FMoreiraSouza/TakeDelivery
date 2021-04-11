@@ -7,6 +7,7 @@ import com.example.takedelivery.R;
 import com.example.takedelivery.firebase.ClienteFirebase;
 import com.example.takedelivery.firebase.FirebaseItems;
 import com.example.takedelivery.model.Carrinho;
+import com.example.takedelivery.model.Cliente;
 import com.example.takedelivery.model.Empresa;
 import com.example.takedelivery.model.Produto;
 import com.example.takedelivery.model.Pedido;
@@ -39,6 +40,7 @@ public class CarrinhoActivity extends AppCompatActivity {
 
 
     Carrinho carrinho;
+    Cliente cliente;
 
     private ValueEventListener valueEventListenerCarrinho;
     private ValueEventListener valueEventListenerCliente;
@@ -53,7 +55,9 @@ public class CarrinhoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carrinho);
 
-        Carrinho carrinho = (Carrinho) getIntent().getSerializableExtra("Carrinho");
+        carrinho = (Carrinho) getIntent().getSerializableExtra("carrinho");
+        cliente = (Cliente) getIntent().getSerializableExtra("cliente");
+
 
         textViewNomeEmpresa = findViewById( R.id.textViewNomeEmpresa );
         textViewEndereco = findViewById( R.id.textViewEnderecoEntrega );
@@ -62,15 +66,15 @@ public class CarrinhoActivity extends AppCompatActivity {
         textViewTotal = findViewById( R.id.textViewTotal );
         textViewtQtd = findViewById( R.id.textViewQtd);
 
-
-        textViewNomeEmpresa.setText(carrinho.getEmpresa().getNome());
-        textViewEndereco.setText(carrinho.getEmpresa().getEndereco());
-        textViewNome.setText(carrinho.getProduto().getNome());
-        textViewtQtd.setText(String.valueOf(carrinho.getQtde()));
-        Locale ptBr = new Locale("pt", "BR");
-        textViewPreco.setText( NumberFormat.getCurrencyInstance(ptBr).format(carrinho.getProduto().getPreco()));
-        textViewTotal.setText( NumberFormat.getCurrencyInstance(ptBr).format(carrinho.getValorTotal()));
-
+        if(carrinho != null) {
+            textViewNomeEmpresa.setText(carrinho.getEmpresa().getNomeFantasia());
+            textViewEndereco.setText(carrinho.getEmpresa().getEndereco());
+            textViewNome.setText(carrinho.getProduto().getNome());
+            textViewtQtd.setText(String.valueOf(carrinho.getQtde()));
+            Locale ptBr = new Locale("pt", "BR");
+            textViewPreco.setText(NumberFormat.getCurrencyInstance(ptBr).format(carrinho.getProduto().getPreco()));
+            textViewTotal.setText(NumberFormat.getCurrencyInstance(ptBr).format(carrinho.getValorTotal()));
+        }
         String identificadorCli = ClienteFirebase.getIdentificarCliente();
         database = FirebaseItems.getFirebaseDatabase();
         cliLogadoRef = database.child("clientes")
@@ -90,13 +94,15 @@ public class CarrinhoActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ClienteActivity.class);
         Pedido pedido = new Pedido();
         pedido.setEmpresa(carrinho.getEmpresa());
-        pedido.setCliente(carrinho.getCliente());
+        pedido.setCliente(cliente);
         pedido.setStatus("Pendente Aprovação");
+        pedido.setProduto(carrinho.getProduto());
         Date data = new Date();
         pedido.setData(new SimpleDateFormat("dd-MM-yyyy").format(data));
         pedido.setMetodoDePagamento("Dinheiro");
         pedido.setHora( new SimpleDateFormat("HH:mm:ss").format(data));
         pedido.setQtd(carrinho.getQtde());
+        pedido.setValorTotal(carrinho.getValorTotal());
         pedido.salvar(cliLogadoRef, empresaRef);
 
         carrinhoRef.removeValue();

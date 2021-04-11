@@ -22,6 +22,8 @@ public class Empresa implements Serializable {
     String endereco;
     String numero;
     ArrayList<Produto> produtos;
+    ArrayList<Pedido> pedidos;
+
     String categoria;
 
 //    public Empresa(String id, String email, String nome, String senha, String cnpj, String nomeFantasia, String telefone, String cep, String estado, String cidade, String bairro, String endereco, String numero, ArrayList<Produto> cardapio, String categoria) {
@@ -43,14 +45,21 @@ public class Empresa implements Serializable {
 //    }
 
 
+    public void setPedidos(ArrayList<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
 
     public Empresa() {
     }
 
-
+    public ArrayList<Pedido> getPedidos() {
+        return pedidos;
+    }
 
     public void salvar(){
         DatabaseReference firebaseRef = FirebaseItems.getFirebaseDatabase();
+        String idEmpresa = firebaseRef.push().getKey();
+        setId(idEmpresa);
         DatabaseReference usuario = firebaseRef.child("empresas").child( getId() );
         usuario.setValue( this );
     }

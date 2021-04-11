@@ -20,6 +20,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseUser;
 
 public class AcessoEmpresa extends AppCompatActivity {
 
@@ -108,6 +109,13 @@ public class AcessoEmpresa extends AppCompatActivity {
         Intent intent = new Intent(AcessoEmpresa.this, EmpresaActivity.class);
         startActivity(intent);
     }
-
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        FirebaseUser usuarioAtual = autenticar.getCurrentUser();
+//        if ( usuarioAtual != null ){
+//            abrirTelaPrincipal();
+//        }
+//    }
 
 }

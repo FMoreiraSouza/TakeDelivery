@@ -48,10 +48,6 @@ public class CadastroEmpresa extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_empresa);
 
 
-
-
-        empresa = CadastroEmpresa.empresa;
-
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
 
         List<String> categorias = new ArrayList<String>();

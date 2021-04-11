@@ -3,9 +3,10 @@ package com.example.takedelivery.model;
 import com.example.takedelivery.firebase.FirebaseItems;
 import com.google.firebase.database.DatabaseReference;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Carrinho {
+public class Carrinho implements Serializable {
     String id;
     Cliente cliente;
     Empresa empresa;

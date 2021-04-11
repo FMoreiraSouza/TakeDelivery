@@ -14,6 +14,10 @@ import androidx.annotation.NonNull;
 import com.example.takedelivery.R;
 import com.example.takedelivery.adapter.AdapterListViewCardapio;
 
+import com.example.takedelivery.firebase.ClienteFirebase;
+import com.example.takedelivery.firebase.EmpresaFirebase;
+import com.example.takedelivery.firebase.FirebaseItems;
+import com.example.takedelivery.firebase.FirebaseOptions;
 import com.example.takedelivery.model.Produto;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,6 +42,8 @@ public class CardapioEmpresaActivity extends AppCompatActivity {
     public static DatabaseReference empresaLogadaRef;
     private DatabaseReference produtosRef;
 
+    private DatabaseReference database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -45,7 +51,11 @@ public class CardapioEmpresaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cardapio_empresa);
 
 
-        empresaLogadaRef = CardapioEmpresaActivity.empresaLogadaRef;
+
+        String identificadorUsuario = EmpresaFirebase.getIdentificarEmpresa();
+        database = FirebaseItems.getFirebaseDatabase();
+        empresaLogadaRef = database.child("empresas")
+                .child( identificadorUsuario );
         produtosRef = empresaLogadaRef.child("produtos");
         selected = -1;
 
@@ -99,18 +109,12 @@ public class CardapioEmpresaActivity extends AppCompatActivity {
 
     public void adicionarProduto(){
         Intent intent = new Intent( this, CadastroProdutoActivity.class );
-        CadastroProdutoActivity.empresaLogadaRef = empresaLogadaRef;
         startActivity(intent);
     }
     public void editarProduto(){
         Intent intent = new Intent( this, CadastroProdutoActivity.class );
         Produto produto = cardapio.get(selected);
-        CadastroProdutoActivity.empresaLogadaRef = empresaLogadaRef;
-        CadastroProdutoActivity.produto = produto;
-        intent.putExtra( "idEdit", produto.getId() );
-        intent.putExtra( "nome", produto.getNome() );
-        intent.putExtra( "descricao", produto.getDescricao() );
-        intent.putExtra( "preco", produto.getPreco() );
+        intent.putExtra("produto", produto);
 
         startActivity( intent );
     }

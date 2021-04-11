@@ -3,47 +3,56 @@ package com.example.takedelivery.empresa;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.takedelivery.PedidosEmpresaActivity;
 import com.example.takedelivery.R;
 import com.example.takedelivery.firebase.EmpresaFirebase;
 import com.example.takedelivery.firebase.FirebaseItems;
+import com.example.takedelivery.model.Empresa;
+import com.example.takedelivery.model.Pedido;
 import com.example.takedelivery.model.Produto;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 public class EmpresaActivity extends AppCompatActivity {
-//    Empresa empresa = new Empresa(0,"28.046.882/0001-45", "Delivrey Menu", "8599568791", "60125151", "CE", "Fortaleza", "Dionisio Torres", "Osvaldo Cruz", "2085", Categoria.BRASILEIRA);
-    ArrayList<Produto> cardapio = new ArrayList<Produto>();
+
     private DatabaseReference database;
     private DatabaseReference empresaLogadaRef;
-    private ChildEventListener childEventListenerProdutos;
-    private ChildEventListener childEventListenerPedidos;
+    private ValueEventListener childEventListenerEmpresa;
+    private DatabaseReference pedidosRef;
+    private ValueEventListener childEventListenerPedidos;
 
-
+    TextView textViewValorHj;
+    TextView textViewQtdPedidosHj;
+    TextView textViewNomeEmpresa;
+    String nomeEmpresa;
+    Empresa empresa = new Empresa();
+    ArrayList<Pedido> pedidos = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_empresa);
-
-
-
         String identificadorUsuario = EmpresaFirebase.getIdentificarEmpresa();
         database = FirebaseItems.getFirebaseDatabase();
         empresaLogadaRef = database.child("empresas")
                 .child( identificadorUsuario );
+        pedidosRef = empresaLogadaRef.child("pedidos");
 
 
-//        return super.onCreateOptionsMenu(menu);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -70,30 +79,100 @@ public class EmpresaActivity extends AppCompatActivity {
 
     public void verCardapio (View view){
         Intent intent = new Intent(this, CardapioEmpresaActivity.class);
-        CardapioEmpresaActivity.empresaLogadaRef = empresaLogadaRef;
+
         startActivity(intent);
 
     }
 
     public void verPedidosPendentes(View view){
-            Intent intent = new Intent(this, PedidosEmpresaActivity.class);
-            PedidosEmpresaActivity.empresaLogadaRef = empresaLogadaRef;
-            intent.putExtra("status", "Pendente aprovação");
-            startActivity(intent);
-        }
+        Intent intent = new Intent(this, PedidosEmpresaActivity.class);
+        intent.putExtra("status", "Pendente aprovação");
+        startActivity(intent);
+    }
 
     public void verPedidosFinalizados(View view){
         Intent intent = new Intent(this, PedidosEmpresaActivity.class);
         intent.putExtra("status", "Finalizado");
-
-//            intent.putParcelableArrayListExtra( "cardapio", (ArrayList<? extends Parcelable>) cardapio);
         startActivity(intent);
     }
     public void verPedidosAndamento(View view){
         Intent intent = new Intent(this, PedidosEmpresaActivity.class);
         intent.putExtra("status", "Preparando Pedido");
-
-//            intent.putParcelableArrayListExtra( "cardapio", (ArrayList<? extends Parcelable>) cardapio);
         startActivity(intent);
+    }
+
+    public void verHistoricoPedidos(View view){
+        Intent intent = new Intent(this, PedidosEmpresaActivity.class);
+        intent.putExtra("status", "todos");
+        startActivity(intent);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        buscarPedidos();
+        buscarEmpresa();
+
+        textViewQtdPedidosHj = (TextView) findViewById(R.id.textViewQtdPedidosHj);
+        textViewValorHj = (TextView) findViewById(R.id.textViewValorPedidosHj);
+        textViewNomeEmpresa = (TextView) findViewById(R.id.textViewNome);
+
+        int qtdPedidos = pedidos.size();
+        textViewQtdPedidosHj.setText(String.valueOf(qtdPedidos));
+        float valorHj = 0;
+        for(Pedido ped: pedidos){
+            valorHj += ped.getValorTotal();
+        }
+        textViewValorHj.setText(String.valueOf(valorHj));
+        textViewNomeEmpresa.setText(nomeEmpresa);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        empresaLogadaRef.removeEventListener( childEventListenerEmpresa);
+        pedidosRef.removeEventListener( childEventListenerPedidos);
+
+
+    }
+
+    public void buscarEmpresa() {
+
+        childEventListenerEmpresa = empresaLogadaRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                nomeEmpresa = dataSnapshot.child("nomeFantasia").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    public void buscarPedidos(){
+
+        childEventListenerPedidos = pedidosRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                pedidos.clear();
+                String dataHoje = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if(dataHoje.equals(ds.child("data").getValue().toString())) {
+                        pedidos.add(ds.getValue(Pedido.class));
+                    }
+                }
+
+//                if(!cardapio.isEmpty()){
+//                    TextView textView = (TextView) findViewById(R.id.textView15);
+//                    ((ViewGroup)textView.getParent()).removeView(textView);
+//                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

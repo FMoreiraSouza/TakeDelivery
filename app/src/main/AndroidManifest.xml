@@ -40,6 +40,7 @@
         <activity android:name=".empresa.CardapioEmpresaActivity" />
         <activity android:name=".cliente.AdicionaProdutoCarrinhoActivity" />
         <activity android:name=".cliente.CarrinhoActivity" />
+        <activity android:name=".empresa.PedidosEmpresaActivity" />
 
         <activity android:name=".cliente.CardapioActivity" />
 

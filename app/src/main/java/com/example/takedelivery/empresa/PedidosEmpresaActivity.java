@@ -1,9 +1,13 @@
-package com.example.takedelivery;
+package com.example.takedelivery.empresa;
 
 import android.os.Bundle;
 
+import com.example.takedelivery.R;
 import com.example.takedelivery.adapter.AdapterListViewPedidos;
+import com.example.takedelivery.firebase.EmpresaFirebase;
+import com.example.takedelivery.firebase.FirebaseItems;
 import com.example.takedelivery.model.Cliente;
+import com.example.takedelivery.model.Empresa;
 import com.example.takedelivery.model.Pedido;
 import com.example.takedelivery.model.Produto;
 import com.google.firebase.database.DataSnapshot;
@@ -25,19 +29,19 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class PedidosEmpresaActivity extends AppCompatActivity {
-    public static ArrayList<Pedido> pedidos;
-    public static ArrayList<Cliente> clientes = new ArrayList<>();
-    public static ArrayList<Produto> produtos = new ArrayList<>();
-    public static DatabaseReference empresaLogadaRef;
+    public static ArrayList<Pedido> pedidos = new ArrayList<>();
     int selected;
     AdapterListViewPedidos adapter;
-    Cliente cliente;
     ListView listViewPedidos;
-    private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance ();
-    private DatabaseReference mDatabaseReference = mDatabase.getReference();
-    private ValueEventListener valueEventListenerPedidos;
+    private DatabaseReference database;
+    public DatabaseReference empresaLogadaRef;
     private DatabaseReference pedidosRef;
+    private ValueEventListener childEventListenerPedidos;
+
+
+
     String status;
+    Empresa empresa;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,14 +53,16 @@ public class PedidosEmpresaActivity extends AppCompatActivity {
 
         }
 
-        empresaLogadaRef = PedidosEmpresaActivity.empresaLogadaRef;
+        String identificadorUsuario = EmpresaFirebase.getIdentificarEmpresa();
+        database = FirebaseItems.getFirebaseDatabase();
+        empresaLogadaRef = database.child("empresas")
+                .child( identificadorUsuario );
         pedidosRef = empresaLogadaRef.child("pedidos");
 
-        pedidos = new ArrayList<Pedido>();
 
         selected = -1;
 
-        adapter = new AdapterListViewPedidos(pedidos, clientes,  produtos, this);
+        adapter = new AdapterListViewPedidos(pedidos,this);
 
         listViewPedidos = (ListView) findViewById(R.id.listViewPedidos);
 
@@ -76,7 +82,6 @@ public class PedidosEmpresaActivity extends AppCompatActivity {
         });
 
     }
-
     @Override
     public void onStart() {
         super.onStart();
@@ -86,24 +91,24 @@ public class PedidosEmpresaActivity extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
-        pedidosRef.removeEventListener( valueEventListenerPedidos );
-    }
+        pedidosRef.removeEventListener( childEventListenerPedidos);
 
+    }
     public void buscarPedidos(){
 
-        valueEventListenerPedidos = pedidosRef.addValueEventListener(new ValueEventListener() {
+        childEventListenerPedidos = pedidosRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 pedidos.clear();
-
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    Pedido pedido = ds.getValue(Pedido.class);
-                    if(pedido.getStatus().equals(status)){
-                        pedidos.add(pedido);
+                    if(ds.child("status").getValue().toString().equals(status) || status.equals("todos")|| (status.equals("Preparando Pedido") && ds.child("status").getValue().toString().equals("Saiu para entrega") )) {
+                        pedidos.add(ds.getValue(Pedido.class));
                     }
                 }
-                buscarClientes();
-//                buscarProdutos();
+//                if(!cardapio.isEmpty()){
+//                    TextView textView = (TextView) findViewById(R.id.textView15);
+//                    ((ViewGroup)textView.getParent()).removeView(textView);
+//                }
                 adapter.notifyDataSetChanged();
             }
 
@@ -113,52 +118,5 @@ public class PedidosEmpresaActivity extends AppCompatActivity {
             }
         });
     }
-
-    public void buscarClientes(){
-        mDatabaseReference.child("clientes").addValueEventListener(new ValueEventListener() {
-            @Override//                activity.updateCardapio( cardapio );
-
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                clientes.clear();
-
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    clientes.add(ds.getValue(Cliente.class));
-                }
-                adapter.notifyDataSetChanged();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-    public void buscarProdutos(){
-
-        empresaLogadaRef.child("produtos").addValueEventListener(new ValueEventListener() {
-            @Override
-
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                produtos.clear();
-
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    produtos.add(ds.getValue(Produto.class));
-                }
-                adapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-
-    public void mudaStatus(View view){
-        adapter.botaoMudaStatus();
-        buscarPedidos();
-    }
-
 
 }

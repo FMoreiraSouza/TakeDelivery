@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.takedelivery.R;
+import com.example.takedelivery.firebase.EmpresaFirebase;
+import com.example.takedelivery.firebase.FirebaseItems;
+import com.example.takedelivery.model.Empresa;
 import com.example.takedelivery.model.Produto;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -23,16 +26,21 @@ public class CadastroProdutoActivity extends AppCompatActivity {
     int id;
     private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance ();
     private DatabaseReference mDatabaseReference = mDatabase.getReference ();
-    public static DatabaseReference empresaLogadaRef;
     public static Produto produto;
+    private DatabaseReference database;
+    private DatabaseReference empresaLogadaRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_produto);
 
-        empresaLogadaRef = CadastroProdutoActivity.empresaLogadaRef;
-        produto = CadastroProdutoActivity.produto;
+        String identificadorUsuario = EmpresaFirebase.getIdentificarEmpresa();
+        database = FirebaseItems.getFirebaseDatabase();
+        empresaLogadaRef = database.child("empresas")
+                .child( identificadorUsuario );
+
+        produto = (Produto) getIntent().getSerializableExtra("produto");
 
         editTextNome = findViewById( R.id.editTextNome );
         editTextDescricao = findViewById( R.id.editTextDescricao );
@@ -41,16 +49,11 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         edit = false;
 
         if( getIntent().getExtras() != null ){
-            if(getIntent().getExtras().get( "id" ) != null) id = (int) getIntent().getExtras().get( "id" );
-            String nome = (String) getIntent().getExtras().get( "nome" );
-            String descricao = (String) getIntent().getExtras().get( "descricao" );
-            Float preco = (Float) getIntent().getExtras().get( "preco" );
-            if( getIntent().getExtras().get( "idEdit" ) != null) idProdutoEditar =  getIntent().getExtras().get( "idEdit" ).toString();
-            editTextNome.setText(nome);
-            editTextDescricao.setText(descricao);
-            editTextPreco.setText(String.valueOf(preco));
+            editTextNome.setText(produto.getNome());
+            editTextDescricao.setText(produto.getDescricao());
+            editTextPreco.setText(String.valueOf(produto.getPreco()));
 
-            if(idProdutoEditar != null) edit = true;
+            edit = true;
         }
 
     }
@@ -60,7 +63,6 @@ public class CadastroProdutoActivity extends AppCompatActivity {
     }
 
     public void adicionar( View view ){
-        Intent intent = new Intent();
 
         String nome = editTextNome.getText().toString();
         String descricao = editTextDescricao.getText().toString();

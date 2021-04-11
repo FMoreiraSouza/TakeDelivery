@@ -10,7 +10,7 @@ import com.google.firebase.database.Exclude;
 
 public class Cliente implements Serializable {
 
-        private String ID;
+        private String id;
         private String Nome;
         private String Email;
         private String Senha;
@@ -24,19 +24,17 @@ public class Cliente implements Serializable {
 
 
         public void salvarCliente() {
-
-            DatabaseReference firebaseRef = FirebaseOptions.getFirebase();
-            DatabaseReference usuario = firebaseRef.child("Clientes").child(getID());
-            usuario.setValue(this);
+            DatabaseReference firebaseRef = FirebaseOptions.getFirebase().child("clientes");
+            firebaseRef.child( getId()).setValue( this );
         }
 
         @Exclude
-        public String getID() {
-            return ID;
+        public String getId() {
+            return id;
         }
 
-        public void setID(String ID) {
-            this.ID = ID;
+        public void setId(String id) {
+            this.id = id;
         }
 
         public String getNome() {

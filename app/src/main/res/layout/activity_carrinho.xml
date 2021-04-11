@@ -138,13 +138,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/button9"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:onClick="fazerPedido"
-            android:text="Fazer pedido" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="cancelar"
+                app:backgroundTint="#8A8787" />
+
+            <Button
+                android:id="@+id/button14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="fazerPedido"
+                android:text="Fazer pedido"/>
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

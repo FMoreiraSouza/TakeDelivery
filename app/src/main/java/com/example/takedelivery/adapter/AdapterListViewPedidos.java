@@ -25,8 +25,7 @@ import java.util.Locale;
 public class AdapterListViewPedidos extends BaseAdapter {
 
     private final List<Pedido> pedidos;
-    private final List<Cliente> clientes;
-    private final List<Produto> produtos;
+
 
     private final Context c;
     private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance ();
@@ -37,10 +36,8 @@ public class AdapterListViewPedidos extends BaseAdapter {
     ArrayList<Produto> produtosLista = new ArrayList<>();
     int position;
 
-    public AdapterListViewPedidos(List<Pedido> pedidos, List<Cliente> clientes, List<Produto> produtos, Context context) {
+    public AdapterListViewPedidos(List<Pedido> pedidos, Context context) {
         this.pedidos = pedidos;
-        this.clientes = clientes;
-        this.produtos = produtos;
         this.c = context;
     }
 
@@ -65,15 +62,7 @@ public class AdapterListViewPedidos extends BaseAdapter {
         this.position = position;
         Pedido pedido = pedidos.get(position);
 
-        if(clientes != null) {
-            for (Cliente cli : clientes) {
-                if (String.valueOf(cli.getID()).equals(pedido.getCliente())) {
-                    cliente = cli;
-                }
-            }
-        }
-
-            convertView = LayoutInflater.from(c).inflate(R.layout.layout_list_pedidos, parent, false);
+        convertView = LayoutInflater.from(c).inflate(R.layout.layout_list_pedidos, parent, false);
 
         TextView idPedido = (TextView) convertView.findViewById(R.id.textViewIdPedido);
         TextView data = (TextView) convertView.findViewById(R.id.textViewData);
@@ -88,28 +77,18 @@ public class AdapterListViewPedidos extends BaseAdapter {
 
         TextView pagamento = (TextView) convertView.findViewById(R.id.textViewPagamento);
         Button status = (Button) convertView.findViewById(R.id.buttonsStatus);
-        if(cliente != null) {
-            idPedido.setText( String.valueOf(pedido.getId()));
-            data.setText(pedido.getData());
-            if(pedido.getStatus().equals("Pendente aprovação")) {
-                status.setText("Aprovar");
-            }else if(pedido.getStatus().equals("Preparando Pedido")){
-                status.setText("Liberar para entrega");
-            }else{
-                ((ViewGroup)status.getParent()).removeView(status);
-            }
 
 
-            nomeCliente.setText(cliente.getNome());
-            endereco.setText(cliente.getEndereco());
-            bairro.setText(cliente.getBairro());
-            produto.setText(pedido.getProduto().getNome());
-            qtd.setText(pedido.getQtd() + "x");
-            Locale ptBr = new Locale("pt", "BR");
-            preco.setText( NumberFormat.getCurrencyInstance(ptBr).format(pedido.getProduto().getPreco()));
-            valor.setText( NumberFormat.getCurrencyInstance(ptBr).format(pedido.getValorTotal()));
-            pagamento.setText(pedido.getMetodoDePagamento());
-        }
+        nomeCliente.setText(pedido.getCliente().getNome());
+        endereco.setText(pedido.getCliente().getEndereco());
+        bairro.setText(pedido.getCliente().getBairro());
+        produto.setText(pedido.getProduto().getNome());
+        qtd.setText(String.valueOf(pedido.getQtd()) + "x");
+        Locale ptBr = new Locale("pt", "BR");
+        preco.setText( NumberFormat.getCurrencyInstance(ptBr).format(pedido.getProduto().getPreco()));
+        valor.setText( NumberFormat.getCurrencyInstance(ptBr).format(pedido.getValorTotal()));
+        pagamento.setText(pedido.getMetodoDePagamento());
+
         return convertView;
 
     }

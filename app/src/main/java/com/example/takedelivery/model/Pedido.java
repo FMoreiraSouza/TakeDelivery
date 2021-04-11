@@ -2,9 +2,10 @@ package com.example.takedelivery.model;
 
 import com.google.firebase.database.DatabaseReference;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Pedido {
+public class Pedido implements Serializable {
     String id;
     Cliente cliente;
     Empresa empresa;
@@ -37,7 +38,7 @@ public class Pedido {
         DatabaseReference pedidoRefCli = clienteRef.child("pedidos");
 
         String idPedidoFirebase = pedidoRefCli.push().getKey();
-            setId(idPedidoFirebase);
+        setId(idPedidoFirebase);
         pedidoRefEmp.child( getId()).setValue( this );
         pedidoRefCli.child( getId()).setValue( this );
 
@@ -56,9 +57,6 @@ public class Pedido {
     }
 
 
-    public void setProdutos(Produto produto) {
-        this.produto = produto;
-    }
 
     public void setValorTotal(Float valorTotal) {
         this.valorTotal = valorTotal;
@@ -74,9 +72,6 @@ public class Pedido {
         this.status = status;
     }
 
-    public Produto getProdutos() {
-        return produto;
-    }
 
     public Float getValorTotal() {
         return valorTotal;

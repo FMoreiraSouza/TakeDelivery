@@ -58,7 +58,7 @@ public class CadastroCliente extends AppCompatActivity {
                     try {
 
                         String identificadorUsuario = CryptografiaBase64.codificarBase64( usuario.getEmail() );
-                        usuario.setID( identificadorUsuario );
+                        usuario.setId( identificadorUsuario );
                         usuario.salvarCliente();
 
                     }catch (Exception e){
@@ -96,9 +96,9 @@ public class CadastroCliente extends AppCompatActivity {
         String textoNome  = Nome.getText().toString();
         String textoEmail = Email.getText().toString();
         String textoSenha = Senha.getText().toString();
-        String textoTelefone = Senha.getText().toString();
-        String textoEndereco  = Nome.getText().toString();
-        String textoBairro = Email.getText().toString();
+        String textoTelefone = Telefone.getText().toString();
+        String textoEndereco  = Endereco.getText().toString();
+        String textoBairro = Bairro.getText().toString();
         String textoCidade = Senha.getText().toString();
 
         if( !textoNome.isEmpty() ){
@@ -110,6 +110,7 @@ public class CadastroCliente extends AppCompatActivity {
                     usuario.setEmail( textoEmail );
                     usuario.setSenha( textoSenha );
                     usuario.setTelefone( textoTelefone );
+                    usuario.setEndereco(textoEndereco);
                     usuario.setBairro( textoBairro );
                     usuario.setCidade( textoCidade);
 

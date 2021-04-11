@@ -49,7 +49,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/textViewQtdPedidosHj"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -73,7 +73,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/textViewValorPedidosHj"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -87,6 +87,7 @@
             android:id="@+id/button6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="verPedidosPendentes"
             android:text="Ver pedidos pendentes aprovação" />
 
         <Button
@@ -97,10 +98,17 @@
             android:text="Ver pedidos em andamento" />
 
         <Button
-            android:id="@+id/button10"
+            android:id="@+id/button8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="verPedidosFinalizados"
+            android:text="Ver Pedidos finalizados" />
+
+        <Button
+            android:id="@+id/button10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="verHistoricoPedidos"
             android:text="Histórico de Pedidos" />
 
         <Button

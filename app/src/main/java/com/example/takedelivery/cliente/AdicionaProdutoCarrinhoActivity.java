@@ -71,13 +71,14 @@ public class AdicionaProdutoCarrinhoActivity extends AppCompatActivity {
 
         Carrinho carrinho = new Carrinho();
         carrinho.setEmpresa(empresa);
-        carrinho.setCliente(cliente);
         carrinho.setValorTotal(valorTotal);
         carrinho.setQtde(Integer.parseInt(qtd));
         carrinho.setProduto(produto);
         carrinho.salvar(cliLogadoRef);
 
-        intent.putExtra( "carrinho", (Serializable) carrinho);
+        intent.putExtra( "carrinho", carrinho);
+        intent.putExtra( "cliente", cliente);
+
 
         startActivity(intent);
 
