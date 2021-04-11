@@ -8,20 +8,16 @@ import com.example.takedelivery.firebase.ClienteFirebase;
 import com.example.takedelivery.firebase.FirebaseItems;
 import com.example.takedelivery.model.Carrinho;
 import com.example.takedelivery.model.Cliente;
-import com.example.takedelivery.model.Empresa;
-import com.example.takedelivery.model.Produto;
 import com.example.takedelivery.model.Pedido;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -91,7 +87,7 @@ public class CarrinhoActivity extends AppCompatActivity {
 
     }
     public void fazerPedido(View view) {
-        Intent intent = new Intent(this, ClienteActivity.class);
+        Intent intent = new Intent(this, ResumoPedidoActivity.class);
         Pedido pedido = new Pedido();
         pedido.setEmpresa(carrinho.getEmpresa());
         pedido.setCliente(cliente);
@@ -106,11 +102,20 @@ public class CarrinhoActivity extends AppCompatActivity {
         pedido.salvar(cliLogadoRef, empresaRef);
 
         carrinhoRef.removeValue();
+        Toast.makeText(CarrinhoActivity.this, "Pedido realizado",
+                Toast.LENGTH_SHORT).show();
+        intent.putExtra("pedido", pedido);
         startActivity(intent);
 
     }
 
+    public void cancelarPedido(View view){
+        Intent intent = new Intent(this, ClienteActivity.class);
+        Toast.makeText(CarrinhoActivity.this, "Pedido Cancelado",
+                Toast.LENGTH_SHORT).show();
 
+        startActivity(intent);
+    }
 
 
 }

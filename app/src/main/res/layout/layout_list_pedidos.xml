@@ -150,7 +150,7 @@
                 android:id="@+id/buttonsStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="mudaStatus"
+                android:onClick="mudarStatus"
                 android:text="Liberar para a entrega" />
         </LinearLayout>
 

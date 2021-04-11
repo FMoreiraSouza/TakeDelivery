@@ -149,8 +149,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="cancelarPedido"
                 android:text="cancelar"
-                app:backgroundTint="#8A8787" />
+                app:backgroundTint="#B6B4B4" />
 
             <Button
                 android:id="@+id/button14"

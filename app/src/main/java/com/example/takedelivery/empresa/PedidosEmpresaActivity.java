@@ -77,6 +77,7 @@ public class PedidosEmpresaActivity extends AppCompatActivity {
                                     int position, long arg3) {
 
                 selected = position;
+
             }
 
         });
@@ -117,6 +118,10 @@ public class PedidosEmpresaActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void mudarStatus(View view){
+        adapter.botaoMudaStatus( empresaLogadaRef);
     }
 
 }

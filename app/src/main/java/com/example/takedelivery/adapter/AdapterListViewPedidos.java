@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.takedelivery.R;
+import com.example.takedelivery.firebase.FirebaseItems;
 import com.example.takedelivery.model.Cliente;
 import com.example.takedelivery.model.Pedido;
 import com.example.takedelivery.model.Produto;
@@ -26,7 +27,8 @@ public class AdapterListViewPedidos extends BaseAdapter {
 
     private final List<Pedido> pedidos;
 
-
+    private DatabaseReference database = FirebaseItems.getFirebaseDatabase();;
+    Pedido pedido;
     private final Context c;
     private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance ();
     private DatabaseReference mDatabaseReference = mDatabase.getReference ();
@@ -60,7 +62,7 @@ public class AdapterListViewPedidos extends BaseAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         this.position = position;
-        Pedido pedido = pedidos.get(position);
+        pedido = pedidos.get(position);
 
         convertView = LayoutInflater.from(c).inflate(R.layout.layout_list_pedidos, parent, false);
 
@@ -73,9 +75,8 @@ public class AdapterListViewPedidos extends BaseAdapter {
         TextView qtd = (TextView) convertView.findViewById(R.id.textViewqtdPro);
         TextView produto = (TextView) convertView.findViewById(R.id.textViewPro);
         TextView preco = (TextView) convertView.findViewById(R.id.textViewPreco);
-
-
         TextView pagamento = (TextView) convertView.findViewById(R.id.textViewPagamento);
+
         Button status = (Button) convertView.findViewById(R.id.buttonsStatus);
 
 
@@ -87,15 +88,17 @@ public class AdapterListViewPedidos extends BaseAdapter {
         Locale ptBr = new Locale("pt", "BR");
         preco.setText( NumberFormat.getCurrencyInstance(ptBr).format(pedido.getProduto().getPreco()));
         valor.setText( NumberFormat.getCurrencyInstance(ptBr).format(pedido.getValorTotal()));
+        data.setText(pedido.getData());
         pagamento.setText(pedido.getMetodoDePagamento());
 
         return convertView;
 
     }
-    public void botaoMudaStatus(){
+    public void botaoMudaStatus(DatabaseReference empresaLogadaRef ){
+        DatabaseReference clienteRef = database.child("clientes").child(pedido.getCliente().getId());
+
         Pedido pedido = getItem(position);
-        if(pedido.getStatus().equals("Pendente aprovação")) pedido.setStatus("Finalizado");
-        mDatabaseReference = mDatabase.getReference ().child ("empresas").child("0").child("pedidos").child("0");
-        mDatabaseReference.setValue (pedido);
+        if(pedido.getStatus().equals("Pendente aprovação")) pedido.setStatus("Preparando pedido");
+        pedido.salvar(empresaLogadaRef, clienteRef);
     }
 }
