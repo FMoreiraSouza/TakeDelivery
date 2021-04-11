@@ -29,22 +29,17 @@ import java.util.Locale;
 
 public class CarrinhoActivity extends AppCompatActivity {
 
-    public static Empresa empresa;
-    public static Produto produto;
-
-    TextView editTextQtd;
-    TextView editTextNome;
-    TextView editTextPreco;
-    TextView editTextTotal;
     TextView textViewNomeEmpresa;
     TextView textViewEndereco;
+    TextView textViewtQtd;
+    TextView textViewNome;
+    TextView textViewPreco;
+    TextView textViewTotal;
 
 
-    String qtd;
-    String nome ;
-    Float preco ;
-    Float total ;
-    String nomeEmpresa;
+
+    Carrinho carrinho;
+
     private ValueEventListener valueEventListenerCarrinho;
     private ValueEventListener valueEventListenerCliente;
 
@@ -52,21 +47,29 @@ public class CarrinhoActivity extends AppCompatActivity {
     private DatabaseReference carrinhoRef;
     private DatabaseReference cliLogadoRef;
     private DatabaseReference empresaRef;
-    public static Carrinho carrinho;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carrinho);
 
-        empresa = CarrinhoActivity.empresa;
-        produto = CarrinhoActivity.produto;
-        carrinho = CarrinhoActivity.carrinho;
-        editTextQtd = findViewById( R.id.textViewQtd);
-        editTextNome = findViewById( R.id.textViewNomeProduto );
-        editTextPreco = findViewById( R.id.textViewPrecoProduto );
-        editTextTotal = findViewById( R.id.textViewTotal );
+        Carrinho carrinho = (Carrinho) getIntent().getSerializableExtra("Carrinho");
+
         textViewNomeEmpresa = findViewById( R.id.textViewNomeEmpresa );
         textViewEndereco = findViewById( R.id.textViewEnderecoEntrega );
+        textViewNome = findViewById( R.id.textViewNomeProduto );
+        textViewPreco = findViewById( R.id.textViewPrecoProduto );
+        textViewTotal = findViewById( R.id.textViewTotal );
+        textViewtQtd = findViewById( R.id.textViewQtd);
+
+
+        textViewNomeEmpresa.setText(carrinho.getEmpresa().getNome());
+        textViewEndereco.setText(carrinho.getEmpresa().getEndereco());
+        textViewNome.setText(carrinho.getProduto().getNome());
+        textViewtQtd.setText(String.valueOf(carrinho.getQtde()));
+        Locale ptBr = new Locale("pt", "BR");
+        textViewPreco.setText( NumberFormat.getCurrencyInstance(ptBr).format(carrinho.getProduto().getPreco()));
+        textViewTotal.setText( NumberFormat.getCurrencyInstance(ptBr).format(carrinho.getValorTotal()));
 
         String identificadorCli = ClienteFirebase.getIdentificarCliente();
         database = FirebaseItems.getFirebaseDatabase();
@@ -74,31 +77,11 @@ public class CarrinhoActivity extends AppCompatActivity {
                 .child( identificadorCli );
 
         carrinhoRef = cliLogadoRef.child("carrinho");
-
         empresaRef = database.child("empresas")
                 .child( carrinho.getEmpresa().getId() );
 
-            nome = (String) getIntent().getExtras().get( "nome" );
-            qtd = String.valueOf(carrinho.getQtde()) + "x";
-
-            preco = (Float) getIntent().getExtras().get( "preco" );
-            total = (Float) getIntent().getExtras().get( "precoTotal" );
-            nomeEmpresa = empresa.getNomeFantasia();
-
-            textViewNomeEmpresa.setText(nomeEmpresa);
-            editTextNome.setText(nome);
-            editTextQtd.setText(qtd);
-            Locale ptBr = new Locale("pt", "BR");
-            editTextPreco.setText( NumberFormat.getCurrencyInstance(ptBr).format(preco));
-            editTextTotal.setText( NumberFormat.getCurrencyInstance(ptBr).format(total));
-
-
-
     }
     public void limparCarrinho(View view) {
-        editTextNome.setText("");
-        editTextPreco.setText("");
-        editTextTotal.setText("");
         Intent intent = new Intent(this, CardapioActivity.class);
         startActivity(intent);
 
@@ -107,11 +90,12 @@ public class CarrinhoActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ClienteActivity.class);
         Pedido pedido = new Pedido();
         pedido.setEmpresa(carrinho.getEmpresa());
-        pedido.setCliente(cliLogadoRef.getKey());
+        pedido.setCliente(carrinho.getCliente());
         pedido.setStatus("Pendente Aprovação");
-        pedido.setData(new SimpleDateFormat("dd-MM-yyyy").format(new Date()) );
+        Date data = new Date();
+        pedido.setData(new SimpleDateFormat("dd-MM-yyyy").format(data));
         pedido.setMetodoDePagamento("Dinheiro");
-        pedido.setHora("15");
+        pedido.setHora( new SimpleDateFormat("HH:mm:ss").format(data));
         pedido.setQtd(carrinho.getQtde());
         pedido.salvar(cliLogadoRef, empresaRef);
 
@@ -120,37 +104,6 @@ public class CarrinhoActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        buscarProdutos();
-
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        carrinhoRef.removeEventListener( valueEventListenerCarrinho );
-    }
-
-    public void buscarProdutos() {
-
-        valueEventListenerCarrinho = carrinhoRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                carrinho = dataSnapshot.getValue(Carrinho.class);
-//                if(!cardapio.isEmpty()){
-//                    TextView textView = (TextView) findViewById(R.id.textView15);
-//                    ((ViewGroup)textView.getParent()).removeView(textView);
-//                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
 
 

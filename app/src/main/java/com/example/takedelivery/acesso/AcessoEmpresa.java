@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.takedelivery.Empresa.CadastroInicialEmpresa;
-import com.example.takedelivery.Empresa.EmpresaActivity;
+import com.example.takedelivery.empresa.CadastroInicialEmpresa;
+import com.example.takedelivery.empresa.EmpresaActivity;
 import com.example.takedelivery.firebase.FirebaseOptions;
 import com.example.takedelivery.R;
 import com.example.takedelivery.model.AcessoEmpresaActivity;

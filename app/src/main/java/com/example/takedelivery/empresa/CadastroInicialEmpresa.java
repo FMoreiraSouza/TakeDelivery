@@ -1,4 +1,4 @@
-package com.example.takedelivery.Empresa;
+package com.example.takedelivery.empresa;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.example.takedelivery.firebase.CryptografiaBase64;
 
 public class CadastroInicialEmpresa extends AppCompatActivity {
 
@@ -51,7 +52,6 @@ public class CadastroInicialEmpresa extends AppCompatActivity {
 //                    finish();
                     continuarCadastro(empresa);
                     try {
-
                         String identificadorUsuario = CryptografiaBase64.codificarBase64( empresa.getEmail() );
                         empresa.setId( identificadorUsuario );
                         empresa.salvarEmpresa();

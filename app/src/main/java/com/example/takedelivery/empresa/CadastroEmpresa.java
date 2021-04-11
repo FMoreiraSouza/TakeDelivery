@@ -1,4 +1,4 @@
-package com.example.takedelivery.Empresa;
+package com.example.takedelivery.empresa;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.takedelivery.model.Categoria;
 
 public class CadastroEmpresa extends AppCompatActivity {
 

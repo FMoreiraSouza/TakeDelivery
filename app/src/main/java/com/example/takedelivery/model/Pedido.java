@@ -5,10 +5,8 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.List;
 
 public class Pedido {
-    private static int contadorId = 0;
-
     String id;
-    String cliente;
+    Cliente cliente;
     Empresa empresa;
     String data;
     String hora;
@@ -84,13 +82,7 @@ public class Pedido {
         return valorTotal;
     }
 
-    public String getCliente() {
-        return cliente;
-    }
 
-    public void setCliente(String cliente) {
-        this.cliente = cliente;
-    }
 
     public Empresa getEmpresa() {
         return empresa;
@@ -112,6 +104,14 @@ public class Pedido {
 //        this.status = status;
 //    }
 
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 
     public String getData() {
         return data;

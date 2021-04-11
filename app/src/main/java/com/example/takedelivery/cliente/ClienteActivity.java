@@ -7,6 +7,7 @@ import com.example.takedelivery.R;
 import com.example.takedelivery.adapter.AdapterListViewEmpresas;
 import com.example.takedelivery.firebase.ClienteFirebase;
 import com.example.takedelivery.firebase.FirebaseItems;
+import com.example.takedelivery.firebase.FirebaseOptions;
 import com.example.takedelivery.model.Carrinho;
 import com.example.takedelivery.model.Cliente;
 import com.example.takedelivery.model.Empresa;
@@ -51,9 +52,8 @@ public class ClienteActivity extends AppCompatActivity {
 
 
         String identificadorCli = ClienteFirebase.getIdentificarCliente();
-        database = FirebaseItems.getFirebaseDatabase();
-        cliLogadoRef = database.child("clientes")
-                .child( identificadorCli );
+        database = FirebaseOptions.getFirebase();
+        cliLogadoRef = database.child("clientes").child(identificadorCli);
         empresasRef = database.child("empresas");
 
         selected = -1;
@@ -81,8 +81,7 @@ public class ClienteActivity extends AppCompatActivity {
     public void verCardapio (View view){
         Intent intent = new Intent(this, CardapioActivity.class);
         intent.putExtra("empresa", empresas.get(selected));
-        CardapioActivity.cliente = cliente;
-
+        intent.putExtra("cliente", cliente);
 
         startActivity(intent);
 
@@ -104,30 +103,19 @@ public class ClienteActivity extends AppCompatActivity {
             case R.id.carrinho:
                 verCarrinho();
                 break;
-//            case R.id.editar:
-//                editarProduto();
-//                break;
-//            case R.id.excluir:
-//                excluirProduto();
-//                break;
-
         }
         return true;
     }
-    @Override
-    public void onStart() {
-        super.onStart();
-        buscarEmpresas();
-        buscarCliente();
-    }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        empresasRef.removeEventListener( valueEventListenerEmpresas );
-        cliLogadoRef.removeEventListener( valueEventListenerCliente );
 
-    }
+
+
+
+
+
+
+
+
 
     public void verCarrinho(){
         cliLogadoRef.child("carrinho").addValueEventListener(new ValueEventListener() {
@@ -145,11 +133,25 @@ public class ClienteActivity extends AppCompatActivity {
     }
     public void abrirCarrinho(){
         Intent intent = new Intent(this, CarrinhoActivity.class);
-        CarrinhoActivity.carrinho = carrinho;
 //        CarrinhoActivity.empresa = empresa;
 
 
         startActivity(intent);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        buscarEmpresas();
+        buscarCliente();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        empresasRef.removeEventListener( valueEventListenerEmpresas );
+        cliLogadoRef.removeEventListener( valueEventListenerCliente );
+
     }
     public void buscarEmpresas(){
 
@@ -159,27 +161,23 @@ public class ClienteActivity extends AppCompatActivity {
                 empresas.clear();
                 ArrayList<Produto> produtos = new ArrayList();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    if (ds.getChildrenCount() > 5) {
-                        for (DataSnapshot pro : ds.child("produtos").getChildren()) {
-                            produtos.add(pro.getValue(Produto.class));
-                        }
-                        Empresa empresa = new Empresa();
-                        empresa.setProdutos(produtos);
-                        empresa.setId(ds.getKey());
-                        empresa.setCnpj(ds.child("cnpj").getValue().toString());
-                        empresa.setNomeFantasia(ds.child("nomeFantasia").getValue().toString());
-                        empresa.setTelefone(ds.child("telefone").getValue().toString());
-                        empresa.setCep(ds.child("cep").getValue().toString());
-                        empresa.setEstado(ds.child("estado").getValue().toString());
-                        empresa.setCidade(ds.child("cidade").getValue().toString());
-                        empresa.setBairro(ds.child("bairro").getValue().toString());
-                        empresa.setEndereco(ds.child("endereco").getValue().toString());
-//                        empresa.setNumero(ds.child("numero").getValue().toString());
-                        empresas.add(empresa);
-
-//                        empresas.add(ds.getValue(Empresa.class));
-
+                    for (DataSnapshot pro : ds.child("produtos").getChildren()) {
+                        produtos.add(pro.getValue(Produto.class));
                     }
+                    Empresa empresa = new Empresa();
+                    empresa.setProdutos(produtos);
+                    empresa.setId(ds.getKey());
+                    empresa.setCnpj(ds.child("cnpj").getValue().toString());
+                    empresa.setNomeFantasia(ds.child("nomeFantasia").getValue().toString());
+                    empresa.setTelefone(ds.child("telefone").getValue().toString());
+                    empresa.setCep(ds.child("cep").getValue().toString());
+                    empresa.setEstado(ds.child("estado").getValue().toString());
+                    empresa.setCidade(ds.child("cidade").getValue().toString());
+                    empresa.setBairro(ds.child("bairro").getValue().toString());
+                    empresa.setEndereco(ds.child("endereco").getValue().toString());
+//                  empresa.setNumero(ds.child("numero").getValue().toString());
+                    empresas.add(empresa);
+
                 }
 //                if(!cardapio.isEmpty()){
 //                    TextView textView = (TextView) findViewById(R.id.textView15);
@@ -200,10 +198,6 @@ public class ClienteActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 cliente = dataSnapshot.getValue(Cliente.class);
-//                if(!cardapio.isEmpty()){
-//                    TextView textView = (TextView) findViewById(R.id.textView15);
-//                    ((ViewGroup)textView.getParent()).removeView(textView);
-//                }
             }
 
             @Override

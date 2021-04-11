@@ -26,8 +26,8 @@ import java.util.ArrayList;
 
 public class CardapioActivity extends AppCompatActivity {
 
-    public static Empresa empresa;
-    public static Cliente cliente;
+//    public static Empresa empresa;
+//    public static Cliente cliente;
     public ArrayList<Produto> cardapio = new ArrayList<>();
     int selected;
     AdapterListViewCardapioCliente adapter;
@@ -42,21 +42,21 @@ public class CardapioActivity extends AppCompatActivity {
     private DatabaseReference produtosRef;
     private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance ();
     private DatabaseReference mDatabaseReference = mDatabase.getReference ();
+    Empresa empresa;
+    Cliente cliente;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cardapio);
-        empresa = CardapioActivity.empresa;
-        cliente = CardapioActivity.cliente;
+
+        empresa = (Empresa) getIntent().getSerializableExtra("empresa");
+        cliente = (Cliente) getIntent().getSerializableExtra("cliente");
 
         produtosRef = mDatabaseReference.child("empresas").child(empresa.getId()).child("produtos");
-//        if (getIntent().getExtras() != null) {
-            textViewNomeEmpresa = findViewById(R.id.textViewNomeRest);
-            textViewNomeEmpresa.setText(empresa.getNomeFantasia());
-   //     }
 
-//        cardapio = CardapioActivity.empresa.getProdutos();
+        textViewNomeEmpresa = findViewById(R.id.textViewNomeRest);
+        textViewNomeEmpresa.setText(empresa.getNomeFantasia());
 
         selected = -1;
 
@@ -70,7 +70,6 @@ public class CardapioActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int position, long arg3) {
-
                 selected = position;
                 addCarrinho (arg1);
             }
@@ -82,16 +81,11 @@ public class CardapioActivity extends AppCompatActivity {
     public void addCarrinho (View view){
         Intent intent = new Intent(this, AdicionaProdutoCarrinhoActivity.class);
         Produto produto = cardapio.get(selected);
-        AdicionaProdutoCarrinhoActivity.empresa = empresa;
-        AdicionaProdutoCarrinhoActivity.produto = produto;
-        AdicionaProdutoCarrinhoActivity.cliente = cliente;
 
-//        intent.putExtra( "nomeEmpresa", nomeEmpresa );
+        intent.putExtra( "produto", produto );
+        intent.putExtra( "empresa", empresa);
+        intent.putExtra( "cliente", cliente );
 
-        intent.putExtra( "id", produto.getId() );
-        intent.putExtra( "nome", produto.getNome() );
-        intent.putExtra( "descricao", produto.getDescricao() );
-        intent.putExtra( "preco", produto.getPreco() );
         startActivity(intent);
 
     }

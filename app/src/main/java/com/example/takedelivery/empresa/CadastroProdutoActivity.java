@@ -1,4 +1,4 @@
-package com.example.takedelivery.Empresa;
+package com.example.takedelivery.empresa;
 
 import android.content.Intent;
 import android.os.Bundle;

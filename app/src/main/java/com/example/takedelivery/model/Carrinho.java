@@ -8,6 +8,19 @@ import java.util.List;
 public class Carrinho {
     String id;
     Cliente cliente;
+    Empresa empresa;
+    Produto produto;
+    Float valorTotal;
+    int qtde;
+
+
+    public void salvar(DatabaseReference clienteRef){
+        DatabaseReference carrinhoRef = clienteRef.child("carrinho");
+        carrinhoRef.setValue( this );
+
+    }
+    public Carrinho() {
+    }
 
     public int getQtde() {
         return qtde;
@@ -15,24 +28,6 @@ public class Carrinho {
 
     public void setQtde(int qtde) {
         this.qtde = qtde;
-    }
-
-    Empresa empresa;
-    Produto produto;
-    Float valorTotal;
-    int qtde;
-
-    public void salvar(DatabaseReference clienteRef){
-        DatabaseReference carrinhoRef = clienteRef.child("carrinho");
-//        String idPedidoFirebase = carrinhoRef.getKey();
-//        setId(idPedidoFirebase);
-        carrinhoRef.setValue( this );
-
-    }
-    public void excluir(DatabaseReference carrinhoRef){
-        carrinhoRef.removeValue();
-    }
-    public Carrinho() {
     }
 
     public String getId() {

@@ -1,9 +1,8 @@
-package com.example.takedelivery.Empresa;
+package com.example.takedelivery.empresa;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.takedelivery.Empresa.CardapioEmpresaActivity;
 import com.example.takedelivery.PedidosEmpresaActivity;
 import com.example.takedelivery.R;
 import com.example.takedelivery.firebase.EmpresaFirebase;
