@@ -74,16 +74,16 @@ public class CarrinhoActivity extends AppCompatActivity {
             Locale ptBr = new Locale("pt", "BR");
             textViewPreco.setText(NumberFormat.getCurrencyInstance(ptBr).format(carrinho.getProduto().getPreco()));
             textViewTotal.setText(NumberFormat.getCurrencyInstance(ptBr).format(carrinho.getValorTotal()));
+
+            String identificadorCli = ClienteFirebase.getIdentificarCliente();
+            database = FirebaseItems.getFirebaseDatabase();
+            cliLogadoRef = database.child("clientes")
+                    .child(identificadorCli);
+
+            carrinhoRef = cliLogadoRef.child("carrinho");
+            empresaRef = database.child("empresas")
+                    .child(carrinho.getEmpresa().getId());
         }
-        String identificadorCli = ClienteFirebase.getIdentificarCliente();
-        database = FirebaseItems.getFirebaseDatabase();
-        cliLogadoRef = database.child("clientes")
-                .child( identificadorCli );
-
-        carrinhoRef = cliLogadoRef.child("carrinho");
-        empresaRef = database.child("empresas")
-                .child( carrinho.getEmpresa().getId() );
-
     }
     public void limparCarrinho(View view) {
         Intent intent = new Intent(this, CardapioActivity.class);
