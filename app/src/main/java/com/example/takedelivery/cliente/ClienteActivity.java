@@ -1,4 +1,4 @@
-package com.example.takedelivery;
+package com.example.takedelivery.cliente;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -9,9 +9,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.takedelivery.empresa.AdicionarProduto;
+import com.example.takedelivery.R;
+import com.example.takedelivery.adapter.AdapterListViewEmpresas;
 import com.example.takedelivery.model.Empresa;
 import com.example.takedelivery.model.Produto;
 import com.google.firebase.database.DatabaseReference;

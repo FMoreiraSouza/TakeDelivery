@@ -1,8 +1,7 @@
-package com.example.takedelivery;
+package com.example.takedelivery.acesso;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +9,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.takedelivery.empresa.CadastroInicialEmpresa;
+import com.example.takedelivery.empresa.EmpresaActivity;
+import com.example.takedelivery.firebase.FirebaseOptions;
+import com.example.takedelivery.R;
 import com.example.takedelivery.model.Empresa;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

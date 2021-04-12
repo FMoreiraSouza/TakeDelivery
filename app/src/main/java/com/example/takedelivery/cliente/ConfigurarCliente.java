@@ -1,4 +1,4 @@
-package com.example.takedelivery;
+package com.example.takedelivery.cliente;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +14,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.takedelivery.firebase.FirebaseOptions;
+import com.example.takedelivery.R;
 import com.example.takedelivery.helper.UsuarioFirebase;
-import com.example.takedelivery.model.Empresa;
+import com.example.takedelivery.model.Cliente;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,12 +32,10 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 
-public class ConfigurarEmpresa extends AppCompatActivity {
+public class ConfigurarCliente extends AppCompatActivity {
 
-    private EditText editEmpresaNome, editEmpresaCategoria,
-            editEmpresaTempo, editEmpresaTaxa;
-    private ImageView imagePerfilEmpresa;
-
+    private EditText editClienteNome, editClienteEndereco;
+    private ImageView imagemPerfilCliente;
     private static final int SELECAO_GALERIA = 200;
     private StorageReference storageReference;
     private DatabaseReference firebaseRef;
@@ -45,21 +45,21 @@ public class ConfigurarEmpresa extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_configurar_empresa);
+        setContentView(R.layout.activity_configurar_cliente);
 
         //Configurações iniciais
-        inicializarComponentes();
+     //   inicializarComponentes();
         storageReference = FirebaseOptions.getFirebaseStorage();
         firebaseRef = FirebaseOptions.getFirebase();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
 
         //Configurações Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Configurações Empresa");
+        toolbar.setTitle("Configurações Cliente");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        imagePerfilEmpresa.setOnClickListener(new View.OnClickListener() {
+        imagemPerfilCliente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(
@@ -72,80 +72,66 @@ public class ConfigurarEmpresa extends AppCompatActivity {
             }
         });
 
-        recuperarDadosEmpresa();
+        recuperarDadosCliente();
     }
 
-    private void recuperarDadosEmpresa(){
+    private void recuperarDadosCliente(){
 
-    DatabaseReference empresaRef = firebaseRef
-            .child("Empresas")
-            .child( idUsuarioLogado );
-        empresaRef.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
+        DatabaseReference clienteRef = firebaseRef
+                .child("Clientes")
+                .child( idUsuarioLogado );
+        clienteRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-            if( dataSnapshot.getValue() != null ){
-                Empresa empresa = dataSnapshot.getValue(Empresa.class);
-                editEmpresaNome.setText(empresa.getNome());
-                editEmpresaCategoria.setText(empresa.getCategoria());
-                editEmpresaTaxa.setText(empresa.getPrecoEntrega().toString());
-                editEmpresaTempo.setText(empresa.getTempo());
+                if( dataSnapshot.getValue() != null ){
+                    Cliente cliente = dataSnapshot.getValue(Cliente.class);
+                    editClienteNome.setText(cliente.getNome());
+                    editClienteEndereco.setText(cliente.getEndereco());
 
-                urlImagemSelecionada = empresa.getUrlImagem();
-                if( urlImagemSelecionada != "" ){
-                    Picasso.get()
-                            .load(urlImagemSelecionada)
-                            .into(imagePerfilEmpresa);
+                    urlImagemSelecionada = cliente.getUrlImagem();
+                    if( urlImagemSelecionada != "" ){
+                        Picasso.get()
+                                .load(urlImagemSelecionada)
+                                .into(imagemPerfilCliente);
+                    }
+
                 }
 
             }
 
-        }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
-        }
-    });
-
-}
+    }
 
 
 
-    public void validarDadosEmpresa(View view){
+    public void validarDadosCliente(View view){
 
         //Valida se os campos foram preenchidos
-        String nome = editEmpresaNome.getText().toString();
-        String taxa = editEmpresaTaxa.getText().toString();
-        String categoria = editEmpresaCategoria.getText().toString();
-        String tempo = editEmpresaTempo.getText().toString();
+        String nome = editClienteNome.getText().toString();
+        String endereco = editClienteEndereco.getText().toString();
 
         if( !nome.isEmpty()){
-            if( !taxa.isEmpty()){
-                if( !categoria.isEmpty()){
-                    if( !tempo.isEmpty()){
+            if( !endereco.isEmpty()){
 
-                        Empresa empresa = new Empresa();
-                        empresa.setId( idUsuarioLogado );
-                        empresa.setNome( nome );
-                        empresa.setPrecoEntrega( Double.parseDouble(taxa) );
-                        empresa.setCategoria(categoria);
-                        empresa.setTempo( tempo );
-                        empresa.setUrlImagem( urlImagemSelecionada );
-                        empresa.salvarEmpresa();
+                        Cliente cliente = new Cliente();
+                        cliente.setID( idUsuarioLogado );
+                        cliente.setNome( nome );
+                        cliente.setEndereco(endereco);
+                        cliente.setUrlImagem( urlImagemSelecionada );
+                        cliente.salvarCliente();
                         finish();
 
-                    }else{
-                        exibirMensagem("Digite um tempo de entrega");
-                    }
-                }else{
-                    exibirMensagem("Digite uma categoria");
-                }
             }else{
-                exibirMensagem("Digite uma taxa de entrega");
+                exibirMensagem("Digite um endereço para o cliente");
             }
         }else{
-            exibirMensagem("Digite um nome para a empresa");
+            exibirMensagem("Digite um nome para o cliente");
         }
 
     }
@@ -178,7 +164,7 @@ public class ConfigurarEmpresa extends AppCompatActivity {
 
                 if( imagem != null){
 
-                    imagePerfilEmpresa.setImageBitmap( imagem );
+                    imagemPerfilCliente.setImageBitmap( imagem );
 
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     imagem.compress(Bitmap.CompressFormat.JPEG, 70, baos);
@@ -186,14 +172,14 @@ public class ConfigurarEmpresa extends AppCompatActivity {
 
                     final StorageReference imagemRef = storageReference
                             .child("imagens")
-                            .child("Empresas")
+                            .child("Clientes")
                             .child(idUsuarioLogado + "jpeg");
 
                     UploadTask uploadTask = imagemRef.putBytes( dadosImagem );
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(ConfigurarEmpresa.this,
+                            Toast.makeText(ConfigurarCliente.this,
                                     "Erro ao fazer upload da imagem",
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -207,7 +193,7 @@ public class ConfigurarEmpresa extends AppCompatActivity {
                                     Uri url = task.getResult();
                                 }
                             });
-                            Toast.makeText(ConfigurarEmpresa.this,
+                            Toast.makeText(ConfigurarCliente.this,
                                     "Sucesso ao fazer upload da imagem",
                                     Toast.LENGTH_SHORT).show();
 
@@ -224,12 +210,12 @@ public class ConfigurarEmpresa extends AppCompatActivity {
 
     }
 
-    private void inicializarComponentes(){
-        editEmpresaNome = findViewById(R.id.editEmpresaNome);
-        editEmpresaCategoria = findViewById(R.id.editEmpresaCategoria);
-        editEmpresaTaxa = findViewById(R.id.editEmpresaTaxa);
-        editEmpresaTempo = findViewById(R.id.editEmpresaTempo);
-        imagePerfilEmpresa = findViewById(R.id.imagemPerfilEmpresa);
-    }
+   /* private void inicializarComponentes(){
+        editClienteNome = findViewById(R.id.editClienteNome);
+        editClienteEndereco = findViewById(R.id.editClienteEndereco);
+        imagemPerfilCliente= findViewById(R.id.imagemPerfilCliente);
+    }*/
+
+
 
 }

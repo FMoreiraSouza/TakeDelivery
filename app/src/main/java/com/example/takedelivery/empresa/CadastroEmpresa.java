@@ -1,8 +1,10 @@
-package com.example.takedelivery;
+package com.example.takedelivery.empresa;
 
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.takedelivery.R;
+import com.example.takedelivery.acesso.AcessoEmpresa;
 import com.example.takedelivery.model.Categoria;
 import com.example.takedelivery.model.Empresa;
 import com.google.firebase.database.DatabaseReference;

@@ -1,8 +1,10 @@
-package com.example.takedelivery;
+package com.example.takedelivery.empresa;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.takedelivery.R;
 
 public class AdicionarProduto extends AppCompatActivity {
 

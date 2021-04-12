@@ -1,14 +1,16 @@
-package com.example.takedelivery;
+package com.example.takedelivery.cliente;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class CardapioEmpresaActivity extends AppCompatActivity {
+import com.example.takedelivery.R;
+
+public class CardapioActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cardapio_empresa);
+        setContentView(R.layout.activity_cardapio);
     }
 }

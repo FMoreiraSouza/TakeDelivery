@@ -1,17 +1,18 @@
-package com.example.takedelivery;
+package com.example.takedelivery.acesso;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.takedelivery.cliente.CadastroCliente;
+import com.example.takedelivery.cliente.ClienteActivity;
+import com.example.takedelivery.firebase.FirebaseOptions;
+import com.example.takedelivery.R;
 import com.example.takedelivery.model.Cliente;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;

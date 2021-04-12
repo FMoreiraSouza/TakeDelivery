@@ -1,4 +1,4 @@
-package com.example.takedelivery;
+package com.example.takedelivery.firebase;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;

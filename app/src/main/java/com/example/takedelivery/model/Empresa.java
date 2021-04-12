@@ -3,7 +3,7 @@ package com.example.takedelivery.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.example.takedelivery.FirebaseOptions;
+import com.example.takedelivery.firebase.FirebaseOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 

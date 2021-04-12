@@ -1,4 +1,4 @@
-package com.example.takedelivery;
+package com.example.takedelivery.empresa;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,7 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.takedelivery.firebase.FirebaseOptions;
 import com.example.takedelivery.R;
+import com.example.takedelivery.firebase.CryptografiaBase64;
 import com.example.takedelivery.model.Produto;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
@@ -37,7 +39,7 @@ public class EmpresaActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        String identificadorUsuario = EmpresaFirebase.getIdentificarEmpresa();
+        String identificadorUsuario = CryptografiaBase64.EmpresaFirebase.getIdentificarEmpresa();
         database = FirebaseOptions.getFirebase();
         empresaLogadaRef = database.child("empresas")
                 .child( identificadorUsuario );

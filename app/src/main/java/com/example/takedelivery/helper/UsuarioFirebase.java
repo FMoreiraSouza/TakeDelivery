@@ -1,6 +1,6 @@
 package com.example.takedelivery.helper;
 
-import com.example.takedelivery.FirebaseOptions;
+import com.example.takedelivery.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;

@@ -35,16 +35,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".CardapioActivity"></activity>
-        <activity android:name=".PedidosEmpresaActivity" />
-        <activity android:name=".CardapioEmpresaActivity" />
-        <activity android:name=".AdicionarProduto" />
-        <activity android:name=".ConfigurarEmpresa" />
-        <activity android:name=".ConfigurarCliente"
-            android:parentActivityName=".ClienteActivity" />
-        <activity android:name=".EmpresaActivity"
-            android:parentActivityName=".EmpresaActivity" />
-        <activity android:name=".ClienteActivity" />
+        <activity android:name=".cliente.CardapioActivity"></activity>
+        <activity android:name=".empresa.PedidosEmpresaActivity" />
+        <activity android:name=".empresa.CardapioEmpresaActivity" />
+        <activity android:name=".empresa.AdicionarProduto" />
+        <activity android:name=".empresa.ConfigurarEmpresa" />
+        <activity android:name=".cliente.ConfigurarCliente"
+            android:parentActivityName=".cliente.ClienteActivity" />
+        <activity android:name=".empresa.EmpresaActivity"
+            android:parentActivityName=".empresa.EmpresaActivity" />
+        <activity android:name=".cliente.ClienteActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -60,14 +60,14 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".CadastroEmpresa" />
+        <activity android:name=".empresa.CadastroEmpresa" />
         <activity android:name=".model.Empresa" />
         <activity android:name=".Cliente1" />
-        <activity android:name=".CadastroInicialEmpresa" />
-        <activity android:name=".CadastroCliente" />
-        <activity android:name=".AcessoEmpresa"
+        <activity android:name=".empresa.CadastroInicialEmpresa" />
+        <activity android:name=".cliente.CadastroCliente" />
+        <activity android:name=".acesso.AcessoEmpresa"
             android:parentActivityName=".Escolha" />
-        <activity android:name=".AcessoCliente"
+        <activity android:name=".acesso.AcessoCliente"
             android:parentActivityName=".Escolha" />
         <activity android:name=".Escolha" />
         <activity android:name=".MainActivity">
