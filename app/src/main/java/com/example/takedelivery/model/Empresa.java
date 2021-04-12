@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.example.takedelivery.firebase.FirebaseOptions;
+import com.example.takedelivery.firebase.FirebaseItems;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 
@@ -21,11 +22,13 @@ public class Empresa implements Serializable {
     String bairro;
     String endereco;
     String numero;
-    ArrayList<String> produtos;
     String categoria;
     private String tempo;
     private Double precoEntrega;
     private String urlImagem;
+    ArrayList<Produto> produtos;
+    ArrayList<Pedido> pedidos;
+
 
 //    public Empresa(String id, String email, String nome, String senha, String cnpj, String nomeFantasia, String telefone, String cep, String estado, String cidade, String bairro, String endereco, String numero, ArrayList<Produto> cardapio, String categoria) {
 //        this.id = id;
@@ -56,7 +59,9 @@ public class Empresa implements Serializable {
     public Empresa() {
     }
 
-
+    public void setPedidos(ArrayList<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
 
     public void salvarEmpresa(){
         DatabaseReference firebaseRef = FirebaseOptions.getFirebase();
@@ -88,11 +93,12 @@ public class Empresa implements Serializable {
         this.precoEntrega = precoEntrega;
     }
 
-    public ArrayList<String> getProdutos() {
+
+    public ArrayList<Produto> getProdutos() {
         return produtos;
     }
 
-    public void setProdutos(ArrayList<String> produtos) {
+    public void setProdutos(ArrayList<Produto> produtos) {
         this.produtos = produtos;
     }
 

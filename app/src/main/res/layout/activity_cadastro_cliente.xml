@@ -14,11 +14,13 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="120dp"
+
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
         app:layout_constraintVertical_bias="0.873">
 
         <TextView
@@ -86,7 +88,7 @@
             android:inputType="textPersonName" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/textViewValorPedidosHj"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Bairro" />

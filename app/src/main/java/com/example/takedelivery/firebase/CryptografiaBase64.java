@@ -6,6 +6,7 @@ import com.example.takedelivery.model.Empresa;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+
 public class CryptografiaBase64 {
 
     public static String codificarBase64(String texto){
@@ -47,4 +48,5 @@ public class CryptografiaBase64 {
         }
 
     }
+
 }

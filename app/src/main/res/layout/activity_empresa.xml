@@ -6,17 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".empresa.EmpresaActivity">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/toolbar" />
+
+
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="wrap_content"
-        android:layout_height="480dp"
+        android:id="@+id/linearLayout7"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="80dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,11 +48,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pedidos hoje"
+                    android:textColor="@color/coroficial"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/textViewQtdPedidosHj"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -72,11 +72,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Valor hoje"
+                    android:textColor="@color/coroficial"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/textViewValorPedidosHj"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -101,10 +102,17 @@
             android:text="Ver pedidos em andamento" />
 
         <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button8"
+            android:onClick="verPedidosFinalizados"
+            android:text="Ver Pedidos finalizados" />
+
+        <Button
             android:id="@+id/button10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="verPedidosFinalizados"
+            android:onClick="verHistoricoPedidos"
             android:text="Histórico de Pedidos" />
 
         <Button
@@ -116,6 +124,5 @@
             android:text="Cardápio" />
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

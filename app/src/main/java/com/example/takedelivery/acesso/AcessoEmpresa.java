@@ -2,6 +2,7 @@ package com.example.takedelivery.acesso;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -48,7 +49,7 @@ public class AcessoEmpresa extends AppCompatActivity {
     public void logarUsuario(Empresa usuario) {
 
         autenticar.signInWithEmailAndPassword(
-                usuario.getEmail(), usuario.getSenha()
+                usuario.getEmail(),  usuario.getSenha()
         ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -105,14 +106,14 @@ public class AcessoEmpresa extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseUser usuarioAtual = autenticar.getCurrentUser();
-        if ( usuarioAtual != null ){
-            abrirTelaEmpresa();
-        }
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        FirebaseUser usuarioAtual = autenticar.getCurrentUser();
+//        if ( usuarioAtual != null ){
+//            abrirTelaEmpresa();
+//        }
+//    }
 
     public void abrirTelaCadastro(View view) {
         Intent intent = new Intent(AcessoEmpresa.this, CadastroInicialEmpresa.class);

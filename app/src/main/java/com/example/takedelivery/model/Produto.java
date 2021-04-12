@@ -72,4 +72,3 @@ public class Produto implements Serializable {
         produtoRef.child( getId() ).removeValue();
     }
 }
-

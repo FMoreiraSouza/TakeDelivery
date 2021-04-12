@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.takedelivery">
+
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -9,7 +10,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <uses-permission android:name="android.permission.INTERNET"/>
-
 
     <application
         android:allowBackup="true"
@@ -37,6 +37,9 @@
 
         <activity android:name=".cliente.CardapioActivity"></activity>
         <activity android:name=".empresa.PedidosEmpresaActivity" />
+        <activity android:name=".empresa.CadastroInicialEmpresa"/>
+        <activity android:name=".empresa.CadastroEmpresa"/>
+
         <activity android:name=".empresa.CardapioEmpresaActivity" />
         <activity android:name=".empresa.AdicionarProduto" />
         <activity android:name=".empresa.ConfigurarEmpresa" />
@@ -60,15 +63,18 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".empresa.CadastroEmpresa" />
-        <activity android:name=".model.Empresa" />
-        <activity android:name=".Cliente1" />
-        <activity android:name=".empresa.CadastroInicialEmpresa" />
+
         <activity android:name=".cliente.CadastroCliente" />
         <activity android:name=".acesso.AcessoEmpresa"
             android:parentActivityName=".Escolha" />
         <activity android:name=".acesso.AcessoCliente"
             android:parentActivityName=".Escolha" />
+            android:label="@string/title_activity_maps"/>
+
+        <activity android:name=".cliente.AdicionaProdutoCarrinhoActivity" />
+        <activity android:name=".cliente.CarrinhoActivity" />
+        <activity android:name=".cliente.ResumoPedidoActivity" />
+        <activity android:name=".empresa.CadastroProdutoActivity" />
         <activity android:name=".Escolha" />
         <activity android:name=".MainActivity">
             <intent-filter>

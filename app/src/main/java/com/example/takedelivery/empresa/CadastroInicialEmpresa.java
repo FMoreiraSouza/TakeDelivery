@@ -9,9 +9,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.takedelivery.firebase.FirebaseOptions;
 import com.example.takedelivery.R;
 import com.example.takedelivery.firebase.CryptografiaBase64;
+import com.example.takedelivery.firebase.FirebaseOptions;
 import com.example.takedelivery.model.Empresa;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -124,7 +124,6 @@ public class CadastroInicialEmpresa extends AppCompatActivity {
 
     public void continuarCadastro(Empresa empresa){
         Intent intent = new Intent( this, CadastroEmpresa.class );
-        CadastroEmpresa.empresa = empresa;
         startActivity(intent);
     }
 

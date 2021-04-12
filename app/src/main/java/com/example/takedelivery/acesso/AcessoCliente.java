@@ -25,12 +25,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
+
 public class AcessoCliente extends AppCompatActivity {
 
     private EditText Email, Senha;
    // private ImageView perfil;
  //   private LoginButton login;
  //   private TextView info;
+
     private FirebaseAuth autenticar;
 
 
@@ -44,11 +46,9 @@ public class AcessoCliente extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
+
         Email = findViewById(R.id.writeEmailCliente);
         Senha = findViewById(R.id.writeSenhaCliente);
-
-
-
     }
 
     public void logarUsuario(Cliente usuario) {
@@ -60,7 +60,9 @@ public class AcessoCliente extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if (task.isSuccessful()) {
+
                     abrirTelaCliente();
+
                 } else {
 
                     String excecao = "";
@@ -111,24 +113,34 @@ public class AcessoCliente extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseUser usuarioAtual = autenticar.getCurrentUser();
-        if (usuarioAtual != null) {
-            abrirTelaCliente();
-        }
-    }
+
+    //@Override
+//    protected void onStart() {
+//        super.onStart();
+//        FirebaseUser usuarioAtual = autenticar.getCurrentUser();
+//        if (usuarioAtual != null) {
+//            abrirTelaCliente();
+//        }
+//    }
 
     public void abrirTelaCadastro(View view) {
         Intent intent = new Intent(AcessoCliente.this, CadastroCliente.class);
         startActivity(intent);
     }
 
+
     public void abrirTelaCliente() {
         Intent intent = new Intent(AcessoCliente.this, ClienteActivity.class);
         startActivity(intent);
     }
 
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        FirebaseUser usuarioAtual = autenticar.getCurrentUser();
+//        if ( usuarioAtual != null ){
+//            abrirTelaPrincipal();
+//        }
+//    }
 
 }

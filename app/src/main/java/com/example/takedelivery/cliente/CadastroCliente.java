@@ -20,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
+import com.example.takedelivery.firebase.CryptografiaBase64;
+
 public class CadastroCliente extends AppCompatActivity {
 
     private EditText Nome, Email, Senha, Telefone, Endereco, Bairro, Cidade;
@@ -99,7 +101,7 @@ public class CadastroCliente extends AppCompatActivity {
         String textoTelefone = Telefone.getText().toString();
         String textoEndereco  = Endereco.getText().toString();
         String textoBairro = Bairro.getText().toString();
-        String textoCidade = Cidade.getText().toString();
+        String textoCidade = Senha.getText().toString();
 
         if( !textoNome.isEmpty() ){
             if( !textoEmail.isEmpty() ){
@@ -110,6 +112,7 @@ public class CadastroCliente extends AppCompatActivity {
                     usuario.setEmail( textoEmail );
                     usuario.setSenha( textoSenha );
                     usuario.setTelefone( textoTelefone );
+                    usuario.setEndereco(textoEndereco);
                     usuario.setBairro( textoBairro );
                     usuario.setCidade( textoCidade);
 

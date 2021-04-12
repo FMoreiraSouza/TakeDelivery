@@ -71,7 +71,6 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:backgroundTint="#000000"
-                android:onClick="abrirTelaCadastro"
                 android:text="Cadastre-se" />
 
         </LinearLayout>
@@ -84,6 +83,12 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:backgroundTint="#395693"
+                android:text="Login com o Facebook" />
             <com.facebook.login.widget.LoginButton
                 android:layout_width="wrap_content"
                 android:layout_height="100dp" />
@@ -106,8 +111,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/restaurant"
-        tools:layout_editor_absoluteY="52dp" />
+        tools:layout_editor_absoluteY="52dp"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 

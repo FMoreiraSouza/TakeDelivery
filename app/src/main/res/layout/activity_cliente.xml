@@ -6,15 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".cliente.ClienteActivity">
 
-    <include
-        android:id="@+id/include2"
-        layout="@layout/toolbar"
-        android:layout_width="wrap_content" />
 
     <LinearLayout
         android:id="@+id/linearLayout5"
-        android:layout_width="307dp"
-        android:layout_height="480dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:orientation="vertical"
@@ -31,6 +27,7 @@
             android:text="Restaurantes"
             android:textSize="18sp"
             android:textStyle="bold" />
+
 
         <ListView
             android:id="@+id/listViewRestaurantes"

@@ -1,5 +1,4 @@
 package com.example.takedelivery.empresa;
-
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -34,13 +33,13 @@ public class CadastroEmpresa extends AppCompatActivity {
     EditText editTextEndereco;
     EditText editTextNumero;
 
-    ArrayList<Empresa> empresas = new ArrayList<>();
+    ArrayList<Empresa> estruturaEmpresas = new ArrayList<>();
     private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance ();
     private DatabaseReference mDatabaseReference = mDatabase.getReference ();
     boolean edit;
     int idProdutoEditar;
     String selecteditem;
-    public static Empresa empresa;
+    public static Empresa estruturaEmpresa;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +48,7 @@ public class CadastroEmpresa extends AppCompatActivity {
 
 
 
-        empresa = CadastroEmpresa.empresa;
+        estruturaEmpresa = CadastroEmpresa.estruturaEmpresa;
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
 
@@ -111,17 +110,17 @@ public class CadastroEmpresa extends AppCompatActivity {
         String endereco = editTextEndereco.getText().toString();;
         String numero = editTextNumero.getText().toString();
 
-        empresa.setCnpj(cnpj);
-        empresa.setNomeFantasia(nomeFantasia);
-        empresa.setTelefone(telefone);
-        empresa.setCep(cep);
-        empresa.setEstado(estado);
-        empresa.setCidade(cidade);
-        empresa.setBairro(bairro);
-        empresa.setEndereco(endereco);
-        empresa.setNumero(numero);
+        estruturaEmpresa.setCnpj(cnpj);
+        estruturaEmpresa.setNomeFantasia(nomeFantasia);
+        estruturaEmpresa.setTelefone(telefone);
+        estruturaEmpresa.setCep(cep);
+        estruturaEmpresa.setEstado(estado);
+        estruturaEmpresa.setCidade(cidade);
+        estruturaEmpresa.setBairro(bairro);
+        estruturaEmpresa.setEndereco(endereco);
+        estruturaEmpresa.setNumero(numero);
 
-        empresa.salvarEmpresa();
+        estruturaEmpresa.salvarEmpresa();
 
         Toast.makeText(CadastroEmpresa.this, "Sucesso ao cadastrar",
                 Toast.LENGTH_SHORT).show();

@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.takedelivery.firebase.EmpresaFirebase;
+import com.example.takedelivery.firebase.FirebaseOptions;
+import com.example.takedelivery.R;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -14,8 +17,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.takedelivery.firebase.FirebaseOptions;
-import com.example.takedelivery.R;
 import com.example.takedelivery.helper.UsuarioFirebase;
 import com.example.takedelivery.model.Empresa;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -53,13 +54,13 @@ public class ConfigurarEmpresa extends AppCompatActivity {
         inicializarComponentes();
         storageReference = FirebaseOptions.getFirebaseStorage();
         firebaseRef = FirebaseOptions.getFirebase();
-        idUsuarioLogado = UsuarioFirebase.getIdUsuario();
+        idUsuarioLogado = EmpresaFirebase.getIdentificarEmpresa();
 
         //Configurações Toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Configurações Empresa");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        toolbar.setTitle("Configurações Empresa");
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         imagePerfilEmpresa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,38 +80,38 @@ public class ConfigurarEmpresa extends AppCompatActivity {
 
     private void recuperarDadosEmpresa(){
 
-    DatabaseReference empresaRef = firebaseRef
-            .child("Empresas")
-            .child( idUsuarioLogado );
+        DatabaseReference empresaRef = firebaseRef
+                .child("Empresas")
+                .child( idUsuarioLogado );
         empresaRef.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-            if( dataSnapshot.getValue() != null ){
-                Empresa empresa = dataSnapshot.getValue(Empresa.class);
-                editEmpresaNome.setText(empresa.getNome());
-                editEmpresaCategoria.setText(empresa.getCategoria());
-                editEmpresaTaxa.setText(empresa.getPrecoEntrega().toString());
-                editEmpresaTempo.setText(empresa.getTempo());
+                if( dataSnapshot.getValue() != null ){
+                    Empresa empresa = dataSnapshot.getValue(Empresa.class);
+                    editEmpresaNome.setText(empresa.getNome());
+                    editEmpresaCategoria.setText(empresa.getCategoria());
+//                    editEmpresaTaxa.setText(empresa.getPrecoEntrega().toString());
+                    editEmpresaTempo.setText(empresa.getTempo());
 
-                urlImagemSelecionada = empresa.getUrlImagem();
-                if( urlImagemSelecionada != "" ){
-                    Picasso.get()
-                            .load(urlImagemSelecionada)
-                            .into(imagePerfilEmpresa);
+                    urlImagemSelecionada = empresa.getUrlImagem();
+                    if(!urlImagemSelecionada.equals("") ){
+                        Picasso.get()
+                                .load(urlImagemSelecionada)
+                                .into(imagePerfilEmpresa);
+                    }
+
                 }
 
             }
 
-        }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
-        }
-    });
-
-}
+    }
 
 
 
@@ -122,33 +123,33 @@ public class ConfigurarEmpresa extends AppCompatActivity {
         String categoria = editEmpresaCategoria.getText().toString();
         String tempo = editEmpresaTempo.getText().toString();
 
-        if( !nome.isEmpty()){
-            if( !taxa.isEmpty()){
-                if( !categoria.isEmpty()){
-                    if( !tempo.isEmpty()){
+//        if( !nome.isEmpty()){
+//            if( !taxa.isEmpty()){
+//                if( !categoria.isEmpty()){
+//                    if( !tempo.isEmpty()){
 
                         Empresa empresa = new Empresa();
                         empresa.setId( idUsuarioLogado );
-                        empresa.setNome( nome );
-                        empresa.setPrecoEntrega( Double.parseDouble(taxa) );
-                        empresa.setCategoria(categoria);
-                        empresa.setTempo( tempo );
+//                        empresa.setNome( nome );
+//                        empresa.setPrecoEntrega( Double.parseDouble(taxa) );
+//                        empresa.setCategoria(categoria);
+//                        empresa.setTempo( tempo );
                         empresa.setUrlImagem( urlImagemSelecionada );
                         empresa.salvarEmpresa();
                         finish();
 
-                    }else{
-                        exibirMensagem("Digite um tempo de entrega");
-                    }
-                }else{
-                    exibirMensagem("Digite uma categoria");
-                }
-            }else{
-                exibirMensagem("Digite uma taxa de entrega");
-            }
-        }else{
-            exibirMensagem("Digite um nome para a empresa");
-        }
+//                    }else{
+//                        exibirMensagem("Digite um tempo de entrega");
+//                    }
+//                }else{
+//                    exibirMensagem("Digite uma categoria");
+//                }
+//            }else{
+//                exibirMensagem("Digite uma taxa de entrega");
+//            }
+//        }else{
+//            exibirMensagem("Digite um nome para a empresa");
+//        }
 
     }
 
@@ -190,6 +191,7 @@ public class ConfigurarEmpresa extends AppCompatActivity {
                             .child("imagens")
                             .child("Empresas")
                             .child(idUsuarioLogado + "jpeg");
+                    urlImagemSelecionada = idUsuarioLogado;
 
                     UploadTask uploadTask = imagemRef.putBytes( dadosImagem );
                     uploadTask.addOnFailureListener(new OnFailureListener() {

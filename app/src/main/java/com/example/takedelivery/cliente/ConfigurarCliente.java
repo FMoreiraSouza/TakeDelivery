@@ -48,16 +48,16 @@ public class ConfigurarCliente extends AppCompatActivity {
         setContentView(R.layout.activity_configurar_cliente);
 
         //Configurações iniciais
-     //   inicializarComponentes();
+        inicializarComponentes();
         storageReference = FirebaseOptions.getFirebaseStorage();
         firebaseRef = FirebaseOptions.getFirebase();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
 
         //Configurações Toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Configurações Cliente");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        toolbar.setTitle("Configurações Cliente");
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         imagemPerfilCliente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,11 +210,11 @@ public class ConfigurarCliente extends AppCompatActivity {
 
     }
 
-   /* private void inicializarComponentes(){
+   private void inicializarComponentes(){
         editClienteNome = findViewById(R.id.editClienteNome);
-        editClienteEndereco = findViewById(R.id.editClienteEndereco);
+//        editClienteEndereco = findViewById(R.id.editClienteEndereco);
         imagemPerfilCliente= findViewById(R.id.imagemPerfilCliente);
-    }*/
+    }
 
 
 

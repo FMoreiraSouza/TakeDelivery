@@ -5,5 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".empresa.PedidosEmpresaActivity">
+    tools:context=".empresa.EmpresaActivity">
+
+
+    <ListView
+        android:id="@+id/listViewPedidos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
