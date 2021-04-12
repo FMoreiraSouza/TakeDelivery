@@ -7,6 +7,7 @@
     android:backgroundTint="#F7F7F7"
     tools:context=".AcessoEmpresa">
 
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -83,12 +84,9 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:backgroundTint="#395693"
-                android:text="Login com o Facebook" />
+            <com.facebook.login.widget.LoginButton
+                android:layout_width="wrap_content"
+                android:layout_height="100dp" />
 
             <Button
                 android:id="@+id/button3"

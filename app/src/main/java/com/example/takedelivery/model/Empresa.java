@@ -1,12 +1,13 @@
-package com.example.takedelivery;
+package com.example.takedelivery.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.example.takedelivery.FirebaseOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 
-public class EstruturaEmpresa implements Serializable {
+public class Empresa implements Serializable {
     String id;
     String email;
     String nome;
@@ -22,6 +23,9 @@ public class EstruturaEmpresa implements Serializable {
     String numero;
     ArrayList<String> produtos;
     String categoria;
+    private String tempo;
+    private Double precoEntrega;
+    private String urlImagem;
 
 //    public Empresa(String id, String email, String nome, String senha, String cnpj, String nomeFantasia, String telefone, String cep, String estado, String cidade, String bairro, String endereco, String numero, ArrayList<Produto> cardapio, String categoria) {
 //        this.id = id;
@@ -41,21 +45,47 @@ public class EstruturaEmpresa implements Serializable {
 //        this.categoria = categoria;
 //    }
 
-    public EstruturaEmpresa(String email, String nome, String senha) {
+
+
+    public Empresa(String email, String nome, String senha) {
         this.email = email;
         this.nome = nome;
         this.senha = senha;
     }
 
-    public EstruturaEmpresa() {
+    public Empresa() {
     }
 
 
 
     public void salvarEmpresa(){
         DatabaseReference firebaseRef = FirebaseOptions.getFirebase();
-        DatabaseReference usuario = firebaseRef.child("empresas").child( getId() );
+        DatabaseReference usuario = firebaseRef.child("Empresas").child( getId() );
         usuario.setValue( this );
+    }
+
+    public String getUrlImagem() {
+        return urlImagem;
+    }
+
+    public void setUrlImagem(String urlImagem) {
+        this.urlImagem = urlImagem;
+    }
+
+    public String getTempo() {
+        return tempo;
+    }
+
+    public void setTempo(String tempo) {
+        this.tempo = tempo;
+    }
+
+    public Double getPrecoEntrega() {
+        return precoEntrega;
+    }
+
+    public void setPrecoEntrega(Double precoEntrega) {
+        this.precoEntrega = precoEntrega;
     }
 
     public ArrayList<String> getProdutos() {

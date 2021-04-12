@@ -1,4 +1,4 @@
-package com.example.takedelivery;
+package com.example.takedelivery.model;
 
 public enum Categoria {
     BRASILEIRA("Brasileira"),

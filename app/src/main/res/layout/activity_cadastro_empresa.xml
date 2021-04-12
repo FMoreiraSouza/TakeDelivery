@@ -36,22 +36,6 @@
             android:inputType="textPersonName"
             android:textSize="14sp" />
 
-        <!--        <TextView-->
-        <!--            android:id="@+id/textView28"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="Razão Social"-->
-        <!--            android:textColor="#040404"-->
-        <!--            android:textStyle="bold" />-->
-
-        <!--        <EditText-->
-        <!--            android:id="@+id/editTextRazaoSocial"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:ems="10"-->
-        <!--            android:hint="Razão Social"-->
-        <!--            android:inputType="textPersonName"-->
-        <!--            android:textSize="14sp"/>-->
 
         <TextView
             android:id="@+id/textView29"

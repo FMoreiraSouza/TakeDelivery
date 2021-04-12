@@ -2,23 +2,34 @@ package com.example.takedelivery;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.takedelivery.model.Cliente;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseUser;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 
 public class AcessoCliente extends AppCompatActivity {
 
     private EditText Email, Senha;
+   // private ImageView perfil;
+ //   private LoginButton login;
+ //   private TextView info;
     private FirebaseAuth autenticar;
 
 
@@ -27,14 +38,19 @@ public class AcessoCliente extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acesso_cliente);
         autenticar = FirebaseOptions.getFirebaseAutenticacao();
+        /*Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Take Delivery Cliente");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         Email = findViewById(R.id.writeEmailCliente);
         Senha = findViewById(R.id.writeSenhaCliente);
 
 
+
     }
 
-    public void logarUsuario(EstruturaCliente usuario) {
+    public void logarUsuario(Cliente usuario) {
 
         autenticar.signInWithEmailAndPassword(
                 usuario.getEmail(), usuario.getSenha()
@@ -43,7 +59,7 @@ public class AcessoCliente extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if (task.isSuccessful()) {
-                    abrirTelaPrincipal();
+                    abrirTelaCliente();
                 } else {
 
                     String excecao = "";
@@ -75,7 +91,7 @@ public class AcessoCliente extends AppCompatActivity {
         if (!textoEmail.isEmpty()) {
             if (!textoSenha.isEmpty()) {
 
-                EstruturaCliente usuario = new EstruturaCliente();
+                Cliente usuario = new Cliente();
                 usuario.setEmail(textoEmail);
                 usuario.setSenha(textoSenha);
 
@@ -94,13 +110,22 @@ public class AcessoCliente extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser usuarioAtual = autenticar.getCurrentUser();
+        if (usuarioAtual != null) {
+            abrirTelaCliente();
+        }
+    }
+
     public void abrirTelaCadastro(View view) {
         Intent intent = new Intent(AcessoCliente.this, CadastroCliente.class);
         startActivity(intent);
     }
 
-    public void abrirTelaPrincipal() {
-        Intent intent = new Intent(AcessoCliente.this, Cliente.class);
+    public void abrirTelaCliente() {
+        Intent intent = new Intent(AcessoCliente.this, ClienteActivity.class);
         startActivity(intent);
     }
 

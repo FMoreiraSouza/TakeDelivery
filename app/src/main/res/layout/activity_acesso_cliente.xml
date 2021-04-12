@@ -7,6 +7,8 @@
     android:backgroundTint="#F7F7F7"
     tools:context=".AcessoCliente">
 
+
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -83,17 +85,16 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/button2"
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/LoginFacebook"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:backgroundTint="#395693"
-                android:text="Login com o Facebook" />
+                android:layout_height="match_parent" />
+
 
             <Button
                 android:id="@+id/button3"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="35dp"
                 android:backgroundTint="#4081EC"
                 android:text="Login com o google" />
 
@@ -105,10 +106,11 @@
         android:id="@+id/imageView4"
         android:layout_width="137dp"
         android:layout_height="80dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/client"
-        tools:layout_editor_absoluteY="52dp" />
+        app:srcCompat="@drawable/client" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

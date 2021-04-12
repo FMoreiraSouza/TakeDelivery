@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.takedelivery.model.Cliente;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -37,7 +38,7 @@ public class CadastroCliente extends AppCompatActivity {
 
     }
 
-    public void cadastrarUsuario(EstruturaCliente usuario){
+    public void cadastrarUsuario(Cliente usuario){
 
         autenticacao = FirebaseOptions.getFirebaseAutenticacao();
         autenticacao.createUserWithEmailAndPassword(
@@ -92,16 +93,16 @@ public class CadastroCliente extends AppCompatActivity {
         String textoNome  = Nome.getText().toString();
         String textoEmail = Email.getText().toString();
         String textoSenha = Senha.getText().toString();
-        String textoTelefone = Senha.getText().toString();
-        String textoEndereco  = Nome.getText().toString();
-        String textoBairro = Email.getText().toString();
-        String textoCidade = Senha.getText().toString();
+        String textoTelefone = Telefone.getText().toString();
+        String textoEndereco  = Endereco.getText().toString();
+        String textoBairro = Bairro.getText().toString();
+        String textoCidade = Cidade.getText().toString();
 
         if( !textoNome.isEmpty() ){
             if( !textoEmail.isEmpty() ){
                 if ( !textoSenha.isEmpty() ){
 
-                    EstruturaCliente usuario = new EstruturaCliente();
+                    Cliente usuario = new Cliente();
                     usuario.setNome( textoNome );
                     usuario.setEmail( textoEmail );
                     usuario.setSenha( textoSenha );

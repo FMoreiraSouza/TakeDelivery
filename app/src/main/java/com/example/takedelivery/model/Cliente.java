@@ -1,11 +1,12 @@
-package com.example.takedelivery;
+package com.example.takedelivery.model;
 
+import com.example.takedelivery.FirebaseOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
 
-public class EstruturaCliente implements Serializable {
+public class Cliente implements Serializable {
 
     private String ID;
     private String Nome;
@@ -15,11 +16,12 @@ public class EstruturaCliente implements Serializable {
     private String endereco;
     private String bairro;
     private String cidade;
+    private String urlImagem;
 
-    public EstruturaCliente() {
+    public Cliente() {
     }
 
-    public EstruturaCliente(String ID, String nome, String email, String senha, String telefone, String endereco, String bairro, String cidade) {
+    public Cliente(String ID, String nome, String email, String senha, String telefone, String endereco, String bairro, String cidade) {
         this.ID = ID;
         Nome = nome;
         Email = email;
@@ -35,6 +37,14 @@ public class EstruturaCliente implements Serializable {
         DatabaseReference firebaseRef = FirebaseOptions.getFirebase();
         DatabaseReference usuario = firebaseRef.child("Clientes").child(getID());
         usuario.setValue(this);
+    }
+
+    public String getUrlImagem() {
+        return urlImagem;
+    }
+
+    public void setUrlImagem(String urlImagem) {
+        this.urlImagem = urlImagem;
     }
 
     @Exclude

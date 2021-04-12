@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.takedelivery.model.Empresa;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -33,11 +34,11 @@ public class CadastroInicialEmpresa extends AppCompatActivity {
         editTextSenha = findViewById(R.id.editSenhaEmp);
     }
 
-    public void cadastrarUsuario(EstruturaEmpresa estruturaEmpresa){
+    public void cadastrarUsuario(Empresa empresa){
 
         autenticacao = FirebaseOptions.getFirebaseAutenticacao();
         autenticacao.createUserWithEmailAndPassword(
-                estruturaEmpresa.getEmail(), estruturaEmpresa.getSenha()
+                empresa.getEmail(), empresa.getSenha()
         ).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -46,12 +47,12 @@ public class CadastroInicialEmpresa extends AppCompatActivity {
 //                    Toast.makeText(CadastroInicialEmpresaActivity.this, "Sucesso ao cadastrar",
 //                            Toast.LENGTH_SHORT).show();
 //                    finish();
-                    continuarCadastro(estruturaEmpresa);
+                    continuarCadastro(empresa);
                     try {
 
-                        String identificadorUsuario = CryptografiaBase64.codificarBase64( estruturaEmpresa.getEmail() );
-                        estruturaEmpresa.setId( identificadorUsuario );
-                        estruturaEmpresa.salvarEmpresa();
+                        String identificadorUsuario = CryptografiaBase64.codificarBase64( empresa.getEmail() );
+                        empresa.setId( identificadorUsuario );
+                        empresa.salvarEmpresa();
 
                     }catch (Exception e){
                         e.printStackTrace();
@@ -93,12 +94,12 @@ public class CadastroInicialEmpresa extends AppCompatActivity {
             if( !textoEmail.isEmpty() ){
                 if ( !textoSenha.isEmpty() ){
 
-                    EstruturaEmpresa estruturaEmpresa = new EstruturaEmpresa();
-                    estruturaEmpresa.setNome( textoNome );
-                    estruturaEmpresa.setEmail( textoEmail );
-                    estruturaEmpresa.setSenha( textoSenha );
+                    Empresa empresa = new Empresa();
+                    empresa.setNome( textoNome );
+                    empresa.setEmail( textoEmail );
+                    empresa.setSenha( textoSenha );
 
-                    cadastrarUsuario(estruturaEmpresa);
+                    cadastrarUsuario(empresa);
 
                 }else {
                     Toast.makeText(CadastroInicialEmpresa.this,
@@ -118,9 +119,9 @@ public class CadastroInicialEmpresa extends AppCompatActivity {
 
     }
 
-    public void continuarCadastro(EstruturaEmpresa estruturaEmpresa){
+    public void continuarCadastro(Empresa empresa){
         Intent intent = new Intent( this, CadastroEmpresa.class );
-        CadastroEmpresa.estruturaEmpresa = estruturaEmpresa;
+        CadastroEmpresa.empresa = empresa;
         startActivity(intent);
     }
 
