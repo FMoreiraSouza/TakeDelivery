@@ -50,12 +50,13 @@ public class CadastroInicialEmpresa extends AppCompatActivity {
 //                    Toast.makeText(CadastroInicialEmpresaActivity.this, "Sucesso ao cadastrar",
 //                            Toast.LENGTH_SHORT).show();
 //                    finish();
-                    continuarCadastro(empresa);
                     try {
 
                         String identificadorUsuario = CryptografiaBase64.codificarBase64( empresa.getEmail() );
                         empresa.setId( identificadorUsuario );
                         empresa.salvarEmpresa();
+                        continuarCadastro(empresa);
+
 
                     }catch (Exception e){
                         e.printStackTrace();
@@ -124,6 +125,7 @@ public class CadastroInicialEmpresa extends AppCompatActivity {
 
     public void continuarCadastro(Empresa empresa){
         Intent intent = new Intent( this, CadastroEmpresa.class );
+        intent.putExtra("empresa", empresa);
         startActivity(intent);
     }
 

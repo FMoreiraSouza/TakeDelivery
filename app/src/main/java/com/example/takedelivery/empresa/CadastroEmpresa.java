@@ -33,22 +33,20 @@ public class CadastroEmpresa extends AppCompatActivity {
     EditText editTextEndereco;
     EditText editTextNumero;
 
-    ArrayList<Empresa> estruturaEmpresas = new ArrayList<>();
+    ArrayList<Empresa> empresas = new ArrayList<>();
     private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance ();
     private DatabaseReference mDatabaseReference = mDatabase.getReference ();
     boolean edit;
     int idProdutoEditar;
     String selecteditem;
-    public static Empresa estruturaEmpresa;
+    public Empresa empresa;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_empresa);
 
+        empresa = (Empresa) getIntent().getSerializableExtra("empresa");
 
-
-
-        estruturaEmpresa = CadastroEmpresa.estruturaEmpresa;
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
 
@@ -110,17 +108,17 @@ public class CadastroEmpresa extends AppCompatActivity {
         String endereco = editTextEndereco.getText().toString();;
         String numero = editTextNumero.getText().toString();
 
-        estruturaEmpresa.setCnpj(cnpj);
-        estruturaEmpresa.setNomeFantasia(nomeFantasia);
-        estruturaEmpresa.setTelefone(telefone);
-        estruturaEmpresa.setCep(cep);
-        estruturaEmpresa.setEstado(estado);
-        estruturaEmpresa.setCidade(cidade);
-        estruturaEmpresa.setBairro(bairro);
-        estruturaEmpresa.setEndereco(endereco);
-        estruturaEmpresa.setNumero(numero);
+        empresa.setCnpj(cnpj);
+        empresa.setNomeFantasia(nomeFantasia);
+        empresa.setTelefone(telefone);
+        empresa.setCep(cep);
+        empresa.setEstado(estado);
+        empresa.setCidade(cidade);
+        empresa.setBairro(bairro);
+        empresa.setEndereco(endereco);
+        empresa.setNumero(numero);
 
-        estruturaEmpresa.salvarEmpresa();
+        empresa.salvarEmpresa();
 
         Toast.makeText(CadastroEmpresa.this, "Sucesso ao cadastrar",
                 Toast.LENGTH_SHORT).show();

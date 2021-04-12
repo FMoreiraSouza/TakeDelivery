@@ -68,6 +68,10 @@ public class Empresa implements Serializable {
         DatabaseReference usuario = firebaseRef.child("Empresas").child( getId() );
         usuario.setValue( this );
     }
+    public void addImagem(){
+        DatabaseReference firebaseRef = FirebaseOptions.getFirebase();
+        firebaseRef.child("Empresas").child( getId() ).child("urlImagem").setValue(getUrlImagem());
+    }
 
     public String getUrlImagem() {
         return urlImagem;
@@ -130,9 +134,6 @@ public class Empresa implements Serializable {
         return senha;
     }
 
-    public String getNumero() {
-        return numero;
-    }
 
     @Exclude
 
@@ -212,11 +213,11 @@ public class Empresa implements Serializable {
         this.nomeFantasia = nomeFantasia;
     }
 
-    public String getNúmero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(String núuero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 

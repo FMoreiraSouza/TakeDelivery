@@ -88,7 +88,9 @@ public class ConfigurarEmpresa extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if( dataSnapshot.getValue() != null ){
-                    Empresa empresa = dataSnapshot.getValue(Empresa.class);
+                    Empresa empresa = new Empresa();
+                    empresa.setNomeFantasia(dataSnapshot.child("nomeFantasia").getValue().toString());
+                    empresa.setUrlImagem(dataSnapshot.child("urlImagem").exists() ? dataSnapshot.child("urlImagem").getValue().toString(): "");
                     editEmpresaNome.setText(empresa.getNome());
                     editEmpresaCategoria.setText(empresa.getCategoria());
 //                    editEmpresaTaxa.setText(empresa.getPrecoEntrega().toString());
@@ -135,7 +137,7 @@ public class ConfigurarEmpresa extends AppCompatActivity {
 //                        empresa.setCategoria(categoria);
 //                        empresa.setTempo( tempo );
                         empresa.setUrlImagem( urlImagemSelecionada );
-                        empresa.salvarEmpresa();
+                        empresa.addImagem();
                         finish();
 
 //                    }else{
@@ -190,7 +192,7 @@ public class ConfigurarEmpresa extends AppCompatActivity {
                     final StorageReference imagemRef = storageReference
                             .child("imagens")
                             .child("Empresas")
-                            .child(idUsuarioLogado + "jpeg");
+                            .child(idUsuarioLogado);
                     urlImagemSelecionada = idUsuarioLogado;
 
                     UploadTask uploadTask = imagemRef.putBytes( dadosImagem );
