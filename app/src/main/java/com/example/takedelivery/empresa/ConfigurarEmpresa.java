@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.takedelivery.cliente.CarrinhoActivity;
+import com.example.takedelivery.cliente.ClienteActivity;
+import com.example.takedelivery.cliente.ConfigurarCliente;
 import com.example.takedelivery.firebase.EmpresaFirebase;
 import com.example.takedelivery.firebase.FirebaseOptions;
 import com.example.takedelivery.R;
@@ -107,7 +109,6 @@ public class ConfigurarEmpresa extends AppCompatActivity {
                     empresa.setId(dataSnapshot.getKey());
 
                     empresa.setNome(dataSnapshot.child("nome").getValue().toString());
-                    empresa.setTempo(dataSnapshot.child("tempo").exists() ? dataSnapshot.child("tempo").getValue().toString(): "");
                     empresa.setEmail(dataSnapshot.child("email").getValue().toString());
                     empresa.setSenha(dataSnapshot.child("senha").getValue().toString());
                     empresa.setCnpj(dataSnapshot.child("cnpj").getValue().toString());
@@ -123,7 +124,6 @@ public class ConfigurarEmpresa extends AppCompatActivity {
 
                     editEmpresaNome.setText(empresa.getNomeFantasia());
                     editEmpresaTel.setText(empresa.getTelefone());
-                    editEmpresaTempo.setText(empresa.getTempo());
                     editEmpresaCEP.setText(empresa.getCep());
                     editEmpresaEndereco.setText(empresa.getEndereco());
                     editEmpresaBairro.setText(empresa.getBairro());
@@ -175,13 +175,11 @@ public class ConfigurarEmpresa extends AppCompatActivity {
         String bairro = editEmpresaBairro.getText().toString();
         String cidade = editEmpresaCidade.getText().toString();
         String estado = editEmpresaEstado.getText().toString();
-        String tempo = editEmpresaTempo.getText() != null?  editEmpresaTempo.getText().toString(): "";
 
 //        if( !nome.isEmpty()){
 //            if( !taxa.isEmpty()){
 //                if( !categoria.isEmpty()){
 //                    if( !tempo.isEmpty()){
-                        empresa.setTempo( tempo );
                         empresa.setNomeFantasia(nome);
                         empresa.setTelefone(telefone);
                         empresa.setEndereco(endereco);
@@ -195,6 +193,7 @@ public class ConfigurarEmpresa extends AppCompatActivity {
         Toast.makeText(ConfigurarEmpresa.this, "Salvo com sucesso",
                 Toast.LENGTH_SHORT).show();
                         finish();
+        startActivity(new Intent(this, EmpresaActivity.class));
 
 //                    }else{
 //                        exibirMensagem("Digite um tempo de entrega");
@@ -289,7 +288,6 @@ public class ConfigurarEmpresa extends AppCompatActivity {
     private void inicializarComponentes(){
         editEmpresaNome = findViewById(R.id.editTextNomeFantasiaConfig);
         editEmpresaTel = findViewById(R.id.editTextTelefoneConfig);
-        editEmpresaTempo = findViewById(R.id.editTextNomeTempo);
         editEmpresaCEP = findViewById(R.id.editTextCEPConfig);
         editEmpresaEndereco = findViewById(R.id.editTextEnderecoConfig);
         editEmpresaBairro = findViewById(R.id.editTextBairroConfig);

@@ -30,23 +30,6 @@
             app:civ_border_width="2dp" />
 
         <TextView
-            android:id="@+id/textView26"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Tempo de Entrega"
-            android:textColor="#040404"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/editTextNomeTempo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:textSize="14sp" />
-
-        <TextView
             android:id="@+id/textView29"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
