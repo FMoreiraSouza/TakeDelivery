@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.takedelivery.R;
+import com.example.takedelivery.firebase.CryptografiaBase64;
 import com.example.takedelivery.firebase.FirebaseItems;
 import com.example.takedelivery.model.Cliente;
 import com.example.takedelivery.model.Pedido;
@@ -35,11 +36,13 @@ public class AdapterListViewPedidos extends BaseAdapter {
     Cliente cliente = null;
     AdapterListViewProdutosPedido adapter;
     ListView listViewProdutos;
+    Boolean isEmpresa;
     ArrayList<Produto> produtosLista = new ArrayList<>();
     int position;
 
-    public AdapterListViewPedidos(List<Pedido> pedidos, Context context) {
+    public AdapterListViewPedidos(List<Pedido> pedidos, Boolean isEmpresa, Context context) {
         this.pedidos = pedidos;
+        this.isEmpresa = isEmpresa;
         this.c = context;
     }
 
@@ -66,11 +69,10 @@ public class AdapterListViewPedidos extends BaseAdapter {
 
         convertView = LayoutInflater.from(c).inflate(R.layout.layout_list_pedidos, parent, false);
 
-        TextView idPedido = (TextView) convertView.findViewById(R.id.textViewIdPedido);
         TextView data = (TextView) convertView.findViewById(R.id.textViewData);
         TextView nomeCliente = (TextView) convertView.findViewById(R.id.textViewNomeCliente);
         TextView endereco = (TextView) convertView.findViewById(R.id.textViewEndereco);
-        TextView bairro = (TextView) convertView.findViewById(R.id.textViewBairro);
+        TextView statusPed = (TextView) convertView.findViewById(R.id.textViewStatusPedidoList);
         TextView valor = (TextView) convertView.findViewById(R.id.textViewValorPed);
         TextView qtd = (TextView) convertView.findViewById(R.id.textViewqtdPro);
         TextView produto = (TextView) convertView.findViewById(R.id.textViewPro);
@@ -79,10 +81,23 @@ public class AdapterListViewPedidos extends BaseAdapter {
 
         Button status = (Button) convertView.findViewById(R.id.buttonsStatus);
 
-
+        if(isEmpresa) {
+            if (pedido.getStatus().equals("Pendente aprovação")) {
+                status.setText("Aprovar");
+            } else if (pedido.getStatus().equals("Preparando Pedido")) {
+                status.setText("Liberar para entrega");
+            }else if(pedido.getStatus().equals("Saiu para entrega")){
+                status.setText("Finalizar");
+            }
+            else {
+                ((ViewGroup) status.getParent()).removeView(status);
+            }
+        }else{
+            ((ViewGroup) status.getParent()).removeView(status);
+        }
         nomeCliente.setText(pedido.getCliente().getNome());
         endereco.setText(pedido.getCliente().getEndereco());
-        bairro.setText(pedido.getCliente().getBairro());
+        statusPed.setText(pedido.getStatus());
         produto.setText(pedido.getProduto().getNome());
         qtd.setText(String.valueOf(pedido.getQtd()) + "x");
         Locale ptBr = new Locale("pt", "BR");
@@ -95,10 +110,15 @@ public class AdapterListViewPedidos extends BaseAdapter {
 
     }
     public void botaoMudaStatus(DatabaseReference empresaLogadaRef ){
-        DatabaseReference clienteRef = database.child("Clientes").child(pedido.getCliente().getID());
+        String idCliente = CryptografiaBase64.codificarBase64( cliente.getEmail() );
+//        DatabaseReference clienteRef = database.child("Clientes").child(pedido.getCliente().getID());
+        DatabaseReference clienteRef = database.child("Clientes").child(idCliente);
 
         Pedido pedido = getItem(position);
         if(pedido.getStatus().equals("Pendente aprovação")) pedido.setStatus("Preparando pedido");
+        if(pedido.getStatus().equals("Preparando pedido")) pedido.setStatus("Saiu para entrega");
+        if(pedido.getStatus().equals("Saiu para entrega")) pedido.setStatus("Finzalizado");
+
         pedido.salvar(empresaLogadaRef, clienteRef);
     }
 }

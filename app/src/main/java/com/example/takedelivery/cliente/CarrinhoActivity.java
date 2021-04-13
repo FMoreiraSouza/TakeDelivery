@@ -91,7 +91,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         Pedido pedido = new Pedido();
         pedido.setEmpresa(carrinho.getEmpresa());
         pedido.setCliente(cliente);
-        pedido.setStatus("Pendente Aprovação");
+        pedido.setStatus("Pendente aprovação");
         pedido.setProduto(carrinho.getProduto());
         Date data = new Date();
         pedido.setData(new SimpleDateFormat("dd-MM-yyyy").format(data));

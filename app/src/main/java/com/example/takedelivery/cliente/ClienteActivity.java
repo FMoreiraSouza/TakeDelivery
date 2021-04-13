@@ -14,6 +14,7 @@ import com.example.takedelivery.acesso.AcessoCliente;
 import com.example.takedelivery.empresa.AdicionarProduto;
 import com.example.takedelivery.R;
 import com.example.takedelivery.adapter.AdapterListViewEmpresas;
+import com.example.takedelivery.empresa.PedidosEmpresaActivity;
 import com.example.takedelivery.model.Empresa;
 import com.example.takedelivery.model.Pedido;
 import com.example.takedelivery.model.Produto;
@@ -131,6 +132,13 @@ public class ClienteActivity extends AppCompatActivity {
             case R.id.addshopcar :
                 verCarrinho();
                 break;
+            case R.id.pedidosAndamento :
+                verPedidosAndamento();
+                break;
+                case R.id.pedidos :
+                    verHistoricoPedidos();
+                break;
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -275,4 +283,15 @@ public class ClienteActivity extends AppCompatActivity {
         });
     }
 
+    public void verPedidosAndamento(){
+        Intent intent = new Intent(this, PedidosCliActivity.class);
+        intent.putExtra("status", "Preparando Pedido");
+        startActivity(intent);
+    }
+
+    public void verHistoricoPedidos(){
+        Intent intent = new Intent(this, PedidosCliActivity.class);
+        intent.putExtra("status", "todos");
+        startActivity(intent);
+    }
 }

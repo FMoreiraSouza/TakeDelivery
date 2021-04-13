@@ -91,13 +91,9 @@ public class Pedido implements Serializable {
         return id;
     }
 
-    public String  getStatus() {
+    public String getStatus() {
         return status;
     }
-
-//    public void setStatus(StatusPedido status) {
-//        this.status = status;
-//    }
 
 
     public Cliente getCliente() {

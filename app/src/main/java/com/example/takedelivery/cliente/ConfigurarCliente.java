@@ -106,8 +106,6 @@ public class ConfigurarCliente extends AppCompatActivity {
                     cliente.setEmail(dataSnapshot.child("email").getValue().toString());
                     cliente.setSenha(dataSnapshot.child("senha").getValue().toString());
                     cliente.setTelefone(dataSnapshot.child("telefone").getValue().toString());
-                    cliente.setCidade(dataSnapshot.child("cidade").getValue().toString());
-                    cliente.setBairro(dataSnapshot.child("bairro").getValue().toString());
                     cliente.setEndereco(dataSnapshot.child("endereco").getValue().toString());
                     cliente.setUrlImagem(dataSnapshot.child("urlImagem").exists()? dataSnapshot.child("urlImagem").getValue().toString(): "");
 
@@ -115,8 +113,6 @@ public class ConfigurarCliente extends AppCompatActivity {
                     editNome.setText(cliente.getNome());
                     editTel.setText(cliente.getTelefone());
                     editEndereco.setText(cliente.getEndereco());
-                    editBairro.setText(cliente.getBairro());
-                    editCidade.setText(cliente.getCidade());
                     urlImagemSelecionada = cliente.getUrlImagem();
 
                     if(!cliente.getUrlImagem().equals("")) {
@@ -158,15 +154,11 @@ public class ConfigurarCliente extends AppCompatActivity {
         String nome = editNome.getText().toString();
         String telefone = editTel.getText().toString();
         String endereco = editEndereco.getText().toString();
-        String bairro = editBairro.getText().toString();
-        String cidade = editCidade.getText().toString();
 
         cliente.setID( idUsuarioLogado );
         cliente.setNome( nome );
         cliente.setTelefone(telefone);
-        cliente.setCidade(cidade);
         cliente.setEndereco(endereco);
-        cliente.setBairro(bairro);
         cliente.setUrlImagem( urlImagemSelecionada );
         cliente.salvarCliente();
         Toast.makeText(ConfigurarCliente.this, "Salvo com sucesso",
@@ -255,8 +247,6 @@ public class ConfigurarCliente extends AppCompatActivity {
        editNome = findViewById(R.id.editNomeCliConfig);
        editTel = findViewById(R.id.editTelefoneCliConfig);
        editEndereco = findViewById(R.id.editEnderecoCliConfig);
-       editBairro = findViewById(R.id.editBairroCliConfig);
-       editCidade = findViewById(R.id.editCidadeCliConfig);
        imagemPerfilCliente = findViewById(R.id.imagemPerfilCliente);
     }
 

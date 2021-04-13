@@ -45,6 +45,8 @@
         <activity android:name=".empresa.CardapioEmpresaActivity" />
         <activity android:name=".empresa.AdicionarProduto" />
         <activity android:name=".empresa.ConfigurarEmpresa" />
+        <activity android:name=".cliente.PedidosCliActivity" />
+
         <activity
             android:name=".cliente.ConfigurarCliente"
             android:parentActivityName=".cliente.ClienteActivity" />
