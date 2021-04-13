@@ -42,19 +42,11 @@
             android:textColorHint="@android:color/darker_gray"
             android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/editDestino"
+        <SearchView
+            android:id="@+id/searchlocation"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@android:color/white"
-            android:drawablePadding="6dp"
-            android:drawableTint="@android:color/darker_gray"
-            android:ems="10"
-            android:hint="Digite seu destino"
-            android:inputType="textPersonName"
-            android:textColor="@android:color/darker_gray"
-            android:textColorHint="@android:color/darker_gray"
-            android:textSize="18sp" />
+            android:layout_height="match_parent" />
+
 
     </LinearLayout>
 
@@ -63,6 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="bottom"
+        android:onClick="cadastrar"
         android:text="Cadastrar"
         app:layout_constraintBottom_toBottomOf="parent" />
 
