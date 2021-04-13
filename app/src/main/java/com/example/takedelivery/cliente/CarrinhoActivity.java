@@ -65,7 +65,7 @@ public class CarrinhoActivity extends AppCompatActivity {
 
         if(carrinho != null) {
             textViewNomeEmpresa.setText(carrinho.getEmpresa().getNomeFantasia());
-            textViewEndereco.setText(carrinho.getEmpresa().getEndereco());
+            textViewEndereco.setText(carrinho.getCliente().getEndereco());
             textViewNome.setText(carrinho.getProduto().getNome());
             textViewtQtd.setText(String.valueOf(carrinho.getQtde()));
             Locale ptBr = new Locale("pt", "BR");
