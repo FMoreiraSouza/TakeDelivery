@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Take Delivery</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="facebook_app_id">943938176434898</string>
+    <string name="fb_login_protocol_scheme">fb943938176434898</string>
+
+</resources>
