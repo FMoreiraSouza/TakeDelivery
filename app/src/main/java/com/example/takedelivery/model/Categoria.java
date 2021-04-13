@@ -5,6 +5,8 @@ public enum Categoria {
     LANCHE ("Lanche"),
     JAPONESA ("Japonesa"),
     VEGETARIANA ("Vegetariana"),
+    ITALIANA ("Italiana"),
+
     PIZZA ("Pizza");
 
     private String descricao;
