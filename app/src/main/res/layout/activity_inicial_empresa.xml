@@ -6,149 +6,79 @@
     android:layout_height="match_parent"
     tools:context=".empresa.CadastroInicialEmpresa">
 
-        <LinearLayout
-            android:id="@+id/linearLayout10"
-            android:layout_width="300dp"
+    <LinearLayout
+        android:id="@+id/linearLayout10"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="245dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="Nome do responsável "
+                android:textColor="#0B0A0A"
+                android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editNomeResp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="100dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:ems="10"
+            android:inputType="textPersonName" />
 
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Nome do responsável "
-                    android:textColor="#0B0A0A"
-                    android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="E-mail"
+            android:textColor="#000000"
+            android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/editNomeResp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/editEmailEmp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textEmailAddress" />
 
-                <TextView
-                    android:id="@+id/textView14"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="E-mail"
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Senha"
+            android:textColor="#090909"
+            android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/editEmailEmp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textEmailAddress" />
+        <EditText
+            android:id="@+id/editSenhaEmp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPassword" />
 
-                <TextView
-                    android:id="@+id/textView16"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Senha"
-                    android:textColor="#090909"
-                    android:textStyle="bold" />
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="validarCadastroEmpresa"
+            android:text="continuar cadastro" />
+    </LinearLayout>
 
-                <EditText
-                    android:id="@+id/editSenhaEmp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPassword" />
-
-                <TextView
-                    android:id="@+id/textView26"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="CNPJ"
-                    android:textColor="#040404"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/editTextCNPJ"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="CNPJ"
-                    android:inputType="number"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/textView29"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Nome Fantasia"
-                    android:textColor="#040404"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/editTextNomeFantasia"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="Nome Fantasia"
-                    android:inputType="textPersonName"
-                    android:textSize="14sp" />
-                android:textSize="14sp"/>
-
-                <TextView
-                    android:id="@+id/textView30"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Telefone"
-                    android:textColor="#040404"
-                    android:textStyle="bold" />
-                />
-
-                <EditText
-                    android:id="@+id/editTextTelefone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Telefone"
-                    android:inputType="number"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/textView28"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Categoria"
-                    android:textColor="#040404"
-                    android:textStyle="bold" />
-                android:textStyle="bold"/>
-
-                <Spinner
-                    android:id="@+id/spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp" />
-
-
-                <Button
-                    android:id="@+id/button7"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="validarCadastroEmpresa"
-                    android:text="continuar cadastro" />
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="82dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/restaurant"
-            tools:ignore="MissingConstraints" />
-
-
-
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="133dp"
+        android:layout_height="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/restaurant"
+        tools:layout_editor_absoluteY="26dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

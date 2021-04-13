@@ -105,7 +105,6 @@ public class CadastroEmpresa extends AppCompatActivity {
         String cidade = editTextCidade.getText().toString();;
         String bairro = editTextBairro.getText().toString();;
         String endereco = editTextEndereco.getText().toString();;
-        String numero = editTextNumero.getText().toString();
 
         empresa.setCnpj(cnpj);
         empresa.setNomeFantasia(nomeFantasia);
@@ -115,7 +114,6 @@ public class CadastroEmpresa extends AppCompatActivity {
         empresa.setCidade(cidade);
         empresa.setBairro(bairro);
         empresa.setEndereco(endereco);
-        empresa.setNumero(numero);
 
         empresa.salvarEmpresa();
 
