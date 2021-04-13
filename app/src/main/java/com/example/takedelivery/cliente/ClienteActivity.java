@@ -10,10 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
+import com.example.takedelivery.acesso.AcessoCliente;
 import com.example.takedelivery.empresa.AdicionarProduto;
 import com.example.takedelivery.R;
 import com.example.takedelivery.adapter.AdapterListViewEmpresas;
 import com.example.takedelivery.model.Empresa;
+import com.example.takedelivery.model.Pedido;
 import com.example.takedelivery.model.Produto;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -43,8 +45,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ClienteActivity extends AppCompatActivity {
 
@@ -120,7 +125,7 @@ public class ClienteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.set :
+            case R.id.config :
                 abrirConfiguracoes();
                 break;
             case R.id.addshopcar :
@@ -173,11 +178,18 @@ public class ClienteActivity extends AppCompatActivity {
         });
     }
     public void abrirCarrinho(){
-        Intent intent = new Intent(this, CarrinhoActivity.class);
-        intent.putExtra("carrinho", carrinho);
-        intent.putExtra("cliente", cliente);
+        if(carrinho!= null) {
+            Intent intent = new Intent(this, CarrinhoActivity.class);
+            intent.putExtra("carrinho", carrinho);
+            intent.putExtra("cliente", cliente);
 
-        startActivity(intent);
+            startActivity(intent);
+        }else{
+            Toast.makeText(ClienteActivity.this,
+                    "Carrinho vazio",
+                    Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     @Override
@@ -208,6 +220,9 @@ public class ClienteActivity extends AppCompatActivity {
                     Empresa empresa = new Empresa();
                     empresa.setProdutos(produtos);
                     empresa.setId(ds.getKey());
+                    empresa.setNome(ds.child("nome").getValue().toString());
+                    empresa.setEmail(ds.child("email").getValue().toString());
+                    empresa.setNome(ds.child("senha").getValue().toString());
                     empresa.setCnpj(ds.child("cnpj").getValue().toString());
                     empresa.setNomeFantasia(ds.child("nomeFantasia").getValue().toString());
                     empresa.setTelefone(ds.child("telefone").getValue().toString());
@@ -216,7 +231,6 @@ public class ClienteActivity extends AppCompatActivity {
                     empresa.setCidade(ds.child("cidade").getValue().toString());
                     empresa.setBairro(ds.child("bairro").getValue().toString());
                     empresa.setEndereco(ds.child("endereco").getValue().toString());
-//                  empresa.setNumero(ds.child("numero").getValue().toString());
                     empresas.add(empresa);
 
                 }
@@ -234,7 +248,24 @@ public class ClienteActivity extends AppCompatActivity {
         valueEventListenerCliente = cliLogadoRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                cliente = dataSnapshot.getValue(Cliente.class);
+                ArrayList<Pedido> pedidos = new ArrayList();
+
+                for (DataSnapshot ped : dataSnapshot.child("pedidos").getChildren()) {
+                    pedidos.add(ped.getValue(Pedido.class));
+                }
+                cliente = new Cliente();
+                cliente.setPedidos(pedidos);
+                cliente.setID(dataSnapshot.getKey());
+
+                cliente.setNome(dataSnapshot.child("nome").getValue().toString());
+                cliente.setEmail(dataSnapshot.child("email").getValue().toString());
+                cliente.setSenha(dataSnapshot.child("senha").getValue().toString());
+                cliente.setTelefone(dataSnapshot.child("telefone").getValue().toString());
+                cliente.setCidade(dataSnapshot.child("cidade").getValue().toString());
+                cliente.setBairro(dataSnapshot.child("bairro").getValue().toString());
+                cliente.setEndereco(dataSnapshot.child("endereco").getValue().toString());
+                cliente.setUrlImagem(dataSnapshot.child("urlImagem").exists()? dataSnapshot.child("urlImagem").getValue().toString(): "");
+
             }
 
             @Override
@@ -243,4 +274,5 @@ public class ClienteActivity extends AppCompatActivity {
             }
         });
     }
+
 }

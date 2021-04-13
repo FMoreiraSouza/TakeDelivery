@@ -5,6 +5,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Cliente implements Serializable {
 
@@ -17,19 +18,17 @@ public class Cliente implements Serializable {
     private String bairro;
     private String cidade;
     private String urlImagem;
+    private List<Pedido> pedidos;
 
     public Cliente() {
     }
 
-    public Cliente(String ID, String nome, String email, String senha, String telefone, String endereco, String bairro, String cidade) {
-        this.ID = ID;
-        Nome = nome;
-        Email = email;
-        Senha = senha;
-        this.telefone = telefone;
-        this.endereco = endereco;
-        this.bairro = bairro;
-        this.cidade = cidade;
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 
     public void salvarCliente() {

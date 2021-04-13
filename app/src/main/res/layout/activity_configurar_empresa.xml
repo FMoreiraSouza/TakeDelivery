@@ -6,14 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".empresa.ConfigurarEmpresa">
 
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="100dp"
+        android:id="@+id/linearLayout4"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+
         android:orientation="vertical"
-        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -25,64 +29,250 @@
             app:civ_border_color="#FF000000"
             app:civ_border_width="2dp" />
 
+        <TextView
+            android:id="@+id/textView26"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Tempo de Entrega"
+            android:textColor="#040404"
+            android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editNomeResp"
+            android:id="@+id/editTextNomeTempo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textSize="14sp" />
 
+        <TextView
+            android:id="@+id/textView29"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nome Fantasia"
+            android:textColor="#040404"
+            android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editEmpresaNome"
+            android:id="@+id/editTextNomeFantasiaConfig"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Nome empresa"
-            android:inputType="text"
-            android:padding="16dp" />
+            android:hint="Nome Fantasia"
+            android:inputType="textPersonName"
+            android:textSize="14sp" />
 
-
-        <EditText
-            android:id="@+id/editEmpresaCategoria"
+        <TextView
+            android:id="@+id/textView30"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-2dp"
-            android:ems="10"
-            android:hint="Categoria"
-            android:inputType="text"
-            android:padding="16dp" />
+            android:text="Telefone"
+            android:textColor="#040404"
+            android:textStyle="bold" />
+        />
 
         <EditText
-            android:id="@+id/editEmpresaTempo"
+            android:id="@+id/editTextTelefoneConfig"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-2dp"
-            android:ems="10"
-            android:hint="Tempo entrega"
-            android:inputType="text"
-            android:padding="16dp" />
+            android:hint="Telefone"
+            android:inputType="number"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textView31"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CEP"
+            android:textColor="#040404"
+            android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editEmpresaTaxa"
+            android:id="@+id/editTextCEPConfig"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-2dp"
             android:ems="10"
-            android:hint="Taxa entrega"
-            android:inputType="numberDecimal"
-            android:padding="16dp" />
+            android:hint="CEP"
+            android:inputType="number"
+            android:textSize="14sp" />
+        android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/textView39"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Endereço"
+            android:textColor="#040404"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editTextEnderecoConfig"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Endereço"
+            android:inputType="textPersonName"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewCidadeConfig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cidade"
+                android:textColor="#040404"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView34"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Estado"
+                android:textColor="#040404"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextCidadeConfig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Cidade"
+                android:inputType="textPersonName"
+                android:textSize="14sp" />
+            android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/editTextEstadoConfig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Estado"
+                android:inputType="textPersonName"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView36"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bairro"
+            android:textColor="#040404"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editTextBairroConfig"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Bairro"
+            android:inputType="textPersonName"
+            android:textSize="14sp" />
 
         <Button
-            android:id="@+id/buttonAcesso2"
+            android:id="@+id/button15"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="validarDadosEmpresa"
-            android:padding="16dp"
-            android:text="Salvar" />
+            android:text="salvar" />
 
     </LinearLayout>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:layout_marginBottom="100dp"-->
+<!--        android:orientation="vertical"-->
+<!--        android:padding="16dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--            android:id="@+id/imagemPerfilEmpresa"-->
+<!--            android:layout_width="96dp"-->
+<!--            android:layout_height="96dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:src="@drawable/restaurant"-->
+<!--            app:civ_border_color="#FF000000"-->
+<!--            app:civ_border_width="2dp" />-->
+
+
+<!--        <EditText-->
+<!--            android:id="@+id/editNomeResp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:ems="10"-->
+<!--            android:inputType="textPersonName" />-->
+
+
+<!--        <EditText-->
+<!--            android:id="@+id/editEmpresaNome"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:ems="10"-->
+<!--            android:hint="Nome empresa"-->
+<!--            android:inputType="text"-->
+<!--            android:padding="16dp" />-->
+
+
+<!--        <EditText-->
+<!--            android:id="@+id/editEmpresaCategoria"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="-2dp"-->
+<!--            android:ems="10"-->
+<!--            android:hint="Categoria"-->
+<!--            android:inputType="text"-->
+<!--            android:padding="16dp" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/editEmpresaTempo"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="-2dp"-->
+<!--            android:ems="10"-->
+<!--            android:hint="Tempo entrega"-->
+<!--            android:inputType="text"-->
+<!--            android:padding="16dp" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/editEmpresaTaxa"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="-2dp"-->
+<!--            android:ems="10"-->
+<!--            android:hint="Taxa entrega"-->
+<!--            android:inputType="numberDecimal"-->
+<!--            android:padding="16dp" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/buttonAcesso2"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:onClick="validarDadosEmpresa"-->
+<!--            android:padding="16dp"-->
+<!--            android:text="Salvar" />-->
+
+<!--    </LinearLayout>-->
 
 
 

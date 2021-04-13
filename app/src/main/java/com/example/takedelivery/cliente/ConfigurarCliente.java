@@ -14,10 +14,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.takedelivery.empresa.ConfigurarEmpresa;
+import com.example.takedelivery.firebase.ClienteFirebase;
 import com.example.takedelivery.firebase.FirebaseOptions;
 import com.example.takedelivery.R;
 import com.example.takedelivery.helper.UsuarioFirebase;
 import com.example.takedelivery.model.Cliente;
+import com.example.takedelivery.model.Empresa;
+import com.example.takedelivery.model.Pedido;
+import com.example.takedelivery.model.Produto;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -31,6 +36,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public class ConfigurarCliente extends AppCompatActivity {
 
@@ -41,6 +47,8 @@ public class ConfigurarCliente extends AppCompatActivity {
     private DatabaseReference firebaseRef;
     private String idUsuarioLogado;
     private String urlImagemSelecionada = "";
+    Cliente cliente;
+    private EditText editNome, editEndereco, editCidade, editBairro, editTel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +59,7 @@ public class ConfigurarCliente extends AppCompatActivity {
         inicializarComponentes();
         storageReference = FirebaseOptions.getFirebaseStorage();
         firebaseRef = FirebaseOptions.getFirebase();
-        idUsuarioLogado = UsuarioFirebase.getIdUsuario();
+        idUsuarioLogado = ClienteFirebase.getIdentificarCliente();
 
         //Configurações Toolbar
 //        Toolbar toolbar = findViewById(R.id.toolbar);
@@ -77,25 +85,59 @@ public class ConfigurarCliente extends AppCompatActivity {
 
     private void recuperarDadosCliente(){
 
-        DatabaseReference clienteRef = firebaseRef
+        DatabaseReference empresaRef = firebaseRef
                 .child("Clientes")
                 .child( idUsuarioLogado );
-        clienteRef.addValueEventListener(new ValueEventListener() {
+        empresaRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if( dataSnapshot.getValue() != null ){
-                    Cliente cliente = dataSnapshot.getValue(Cliente.class);
-                    editClienteNome.setText(cliente.getNome());
-                    editClienteEndereco.setText(cliente.getEndereco());
+                    ArrayList<Pedido> pedidos = new ArrayList();
 
-                    urlImagemSelecionada = cliente.getUrlImagem();
-                    if( urlImagemSelecionada != "" ){
-                        Picasso.get()
-                                .load(urlImagemSelecionada)
-                                .into(imagemPerfilCliente);
+                    for (DataSnapshot ped : dataSnapshot.child("pedidos").getChildren()) {
+                        pedidos.add(ped.getValue(Pedido.class));
                     }
+                    cliente = new Cliente();
+                    cliente.setPedidos(pedidos);
+                    cliente.setID(dataSnapshot.getKey());
 
+                    cliente.setNome(dataSnapshot.child("nome").getValue().toString());
+                    cliente.setEmail(dataSnapshot.child("email").getValue().toString());
+                    cliente.setSenha(dataSnapshot.child("senha").getValue().toString());
+                    cliente.setTelefone(dataSnapshot.child("telefone").getValue().toString());
+                    cliente.setCidade(dataSnapshot.child("cidade").getValue().toString());
+                    cliente.setBairro(dataSnapshot.child("bairro").getValue().toString());
+                    cliente.setEndereco(dataSnapshot.child("endereco").getValue().toString());
+                    cliente.setUrlImagem(dataSnapshot.child("urlImagem").exists()? dataSnapshot.child("urlImagem").getValue().toString(): "");
+
+
+                    editNome.setText(cliente.getNome());
+                    editTel.setText(cliente.getTelefone());
+                    editEndereco.setText(cliente.getEndereco());
+                    editBairro.setText(cliente.getBairro());
+                    editCidade.setText(cliente.getCidade());
+                    urlImagemSelecionada = cliente.getUrlImagem();
+
+                    if(!cliente.getUrlImagem().equals("")) {
+                        final StorageReference imagemRef = storageReference
+                                .child("imagens")
+                                .child("Clientes")
+                                .child(cliente.getUrlImagem());
+                        imagemRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                // Got the download URL for 'users/me/profile.png'
+                                // Pass it to Picasso to download, show in ImageView and caching
+                                Picasso.get().load(uri.toString()).into(imagemPerfilCliente);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle any errors
+                            }
+                        });
+                    }
                 }
 
             }
@@ -113,26 +155,24 @@ public class ConfigurarCliente extends AppCompatActivity {
     public void validarDadosCliente(View view){
 
         //Valida se os campos foram preenchidos
-        String nome = editClienteNome.getText().toString();
-        String endereco = editClienteEndereco.getText().toString();
+        String nome = editNome.getText().toString();
+        String telefone = editTel.getText().toString();
+        String endereco = editEndereco.getText().toString();
+        String bairro = editBairro.getText().toString();
+        String cidade = editCidade.getText().toString();
 
-        if( !nome.isEmpty()){
-            if( !endereco.isEmpty()){
+        cliente.setID( idUsuarioLogado );
+        cliente.setNome( nome );
+        cliente.setTelefone(telefone);
+        cliente.setCidade(cidade);
+        cliente.setEndereco(endereco);
+        cliente.setBairro(bairro);
+        cliente.setUrlImagem( urlImagemSelecionada );
+        cliente.salvarCliente();
+        Toast.makeText(ConfigurarCliente.this, "Salvo com sucesso",
+                Toast.LENGTH_SHORT).show();
+        finish();
 
-                        Cliente cliente = new Cliente();
-                        cliente.setID( idUsuarioLogado );
-                        cliente.setNome( nome );
-                        cliente.setEndereco(endereco);
-                        cliente.setUrlImagem( urlImagemSelecionada );
-                        cliente.salvarCliente();
-                        finish();
-
-            }else{
-                exibirMensagem("Digite um endereço para o cliente");
-            }
-        }else{
-            exibirMensagem("Digite um nome para o cliente");
-        }
 
     }
 
@@ -173,7 +213,8 @@ public class ConfigurarCliente extends AppCompatActivity {
                     final StorageReference imagemRef = storageReference
                             .child("imagens")
                             .child("Clientes")
-                            .child(idUsuarioLogado + "jpeg");
+                            .child(idUsuarioLogado);
+                    urlImagemSelecionada = idUsuarioLogado;
 
                     UploadTask uploadTask = imagemRef.putBytes( dadosImagem );
                     uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -211,9 +252,12 @@ public class ConfigurarCliente extends AppCompatActivity {
     }
 
    private void inicializarComponentes(){
-        editClienteNome = findViewById(R.id.editClienteNome);
-//        editClienteEndereco = findViewById(R.id.editClienteEndereco);
-        imagemPerfilCliente= findViewById(R.id.imagemPerfilCliente);
+       editNome = findViewById(R.id.editNomeCliConfig);
+       editTel = findViewById(R.id.editTelefoneCliConfig);
+       editEndereco = findViewById(R.id.editEnderecoCliConfig);
+       editBairro = findViewById(R.id.editBairroCliConfig);
+       editCidade = findViewById(R.id.editCidadeCliConfig);
+       imagemPerfilCliente = findViewById(R.id.imagemPerfilCliente);
     }
 
 

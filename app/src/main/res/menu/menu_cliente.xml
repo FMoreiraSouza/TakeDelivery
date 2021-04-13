@@ -14,7 +14,13 @@
         android:title="Carrinho"
         app:showAsAction="always" />
     <item
-        android:id="@+id/set"
-        android:title="Configurações" />
-    <item android:title="Sair" />
+        android:id="@+id/pedidosAndamento"
+        android:title="Pedido em andamentoConfigurações" />
+    <item android:title="Pedido em andamento" />
+    <item
+        android:id="@+id/pedidos"
+        android:title="Hisórico de Pedidos" />
+    <item
+        android:id="@+id/config"
+        android:title="Meu Perfil" />
 </menu>

@@ -141,14 +141,7 @@ public class EmpresaActivity extends AppCompatActivity {
         textViewValorHj = (TextView) findViewById(R.id.textViewValorPedidosHj);
         textViewNomeEmpresa = (TextView) findViewById(R.id.textViewNome);
 
-        int qtdPedidos = pedidos.size();
-        textViewQtdPedidosHj.setText(String.valueOf(qtdPedidos));
-        float valorHj = 0;
-        for(Pedido ped: pedidos){
-            valorHj += ped.getValorTotal();
-        }
-        textViewValorHj.setText(String.valueOf(valorHj));
-        textViewNomeEmpresa.setText(nomeEmpresa);
+
     }
 
     @Override
@@ -186,11 +179,15 @@ public class EmpresaActivity extends AppCompatActivity {
                         pedidos.add(ds.getValue(Pedido.class));
                     }
                 }
+                int qtdPedidos = pedidos.size();
+                textViewQtdPedidosHj.setText(String.valueOf(qtdPedidos));
+                float valorHj = 0;
+                for(Pedido ped: pedidos){
+                    valorHj += ped.getValorTotal();
+                }
+                textViewValorHj.setText(String.valueOf(valorHj));
 
-//                if(!cardapio.isEmpty()){
-//                    TextView textView = (TextView) findViewById(R.id.textView15);
-//                    ((ViewGroup)textView.getParent()).removeView(textView);
-//                }
+
             }
 
             @Override

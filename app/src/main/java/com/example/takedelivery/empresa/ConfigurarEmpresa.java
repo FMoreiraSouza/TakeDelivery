@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.takedelivery.cliente.CarrinhoActivity;
 import com.example.takedelivery.firebase.EmpresaFirebase;
 import com.example.takedelivery.firebase.FirebaseOptions;
 import com.example.takedelivery.R;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 
 import com.example.takedelivery.helper.UsuarioFirebase;
 import com.example.takedelivery.model.Empresa;
+import com.example.takedelivery.model.Pedido;
+import com.example.takedelivery.model.Produto;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,11 +35,12 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public class ConfigurarEmpresa extends AppCompatActivity {
 
     private EditText editEmpresaNome, editEmpresaCategoria,
-            editEmpresaTempo, editEmpresaTaxa;
+            editEmpresaTempo, editEmpresaTaxa, editEmpresaCEP, editEmpresaEndereco, editEmpresaCidade, editEmpresaEstado, editEmpresaBairro, editEmpresaTel;
     private ImageView imagePerfilEmpresa;
 
     private static final int SELECAO_GALERIA = 200;
@@ -44,7 +48,7 @@ public class ConfigurarEmpresa extends AppCompatActivity {
     private DatabaseReference firebaseRef;
     private String idUsuarioLogado;
     private String urlImagemSelecionada = "";
-
+    Empresa empresa;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,21 +92,65 @@ public class ConfigurarEmpresa extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if( dataSnapshot.getValue() != null ){
-                    Empresa empresa = new Empresa();
-                    empresa.setNomeFantasia(dataSnapshot.child("nomeFantasia").getValue().toString());
-                    empresa.setUrlImagem(dataSnapshot.child("urlImagem").exists() ? dataSnapshot.child("urlImagem").getValue().toString(): "");
-                    editEmpresaNome.setText(empresa.getNome());
-                    editEmpresaCategoria.setText(empresa.getCategoria());
-//                    editEmpresaTaxa.setText(empresa.getPrecoEntrega().toString());
-                    editEmpresaTempo.setText(empresa.getTempo());
+                    ArrayList<Produto> produtos = new ArrayList();
+                    ArrayList<Pedido> pedidos = new ArrayList();
 
-                    urlImagemSelecionada = empresa.getUrlImagem();
-                    if(!urlImagemSelecionada.equals("") ){
-                        Picasso.get()
-                                .load(urlImagemSelecionada)
-                                .into(imagePerfilEmpresa);
+                    for (DataSnapshot pro : dataSnapshot.child("produtos").getChildren()) {
+                        produtos.add(pro.getValue(Produto.class));
                     }
+                    for (DataSnapshot ped : dataSnapshot.child("pedidos").getChildren()) {
+                        pedidos.add(ped.getValue(Pedido.class));
+                    }
+                    empresa = new Empresa();
+                    empresa.setProdutos(produtos);
+                    empresa.setPedidos(pedidos);
+                    empresa.setId(dataSnapshot.getKey());
 
+                    empresa.setNome(dataSnapshot.child("nome").getValue().toString());
+                    empresa.setTempo(dataSnapshot.child("tempo").exists() ? dataSnapshot.child("tempo").getValue().toString(): "");
+                    empresa.setEmail(dataSnapshot.child("email").getValue().toString());
+                    empresa.setSenha(dataSnapshot.child("senha").getValue().toString());
+                    empresa.setCnpj(dataSnapshot.child("cnpj").getValue().toString());
+                    empresa.setNomeFantasia(dataSnapshot.child("nomeFantasia").getValue().toString());
+                    empresa.setTelefone(dataSnapshot.child("telefone").getValue().toString());
+                    empresa.setCep(dataSnapshot.child("cep").getValue().toString());
+                    empresa.setEstado(dataSnapshot.child("estado").getValue().toString());
+                    empresa.setCidade(dataSnapshot.child("cidade").getValue().toString());
+                    empresa.setBairro(dataSnapshot.child("bairro").getValue().toString());
+                    empresa.setEndereco(dataSnapshot.child("endereco").getValue().toString());
+                    empresa.setUrlImagem(dataSnapshot.child("urlImagem").exists()? dataSnapshot.child("urlImagem").getValue().toString(): "");
+
+
+                    editEmpresaNome.setText(empresa.getNomeFantasia());
+                    editEmpresaTel.setText(empresa.getTelefone());
+                    editEmpresaTempo.setText(empresa.getTempo());
+                    editEmpresaCEP.setText(empresa.getCep());
+                    editEmpresaEndereco.setText(empresa.getEndereco());
+                    editEmpresaBairro.setText(empresa.getBairro());
+                    editEmpresaCidade.setText(empresa.getCidade());
+                    editEmpresaEstado.setText(empresa.getEstado());
+                    urlImagemSelecionada = empresa.getUrlImagem();
+
+                    if(empresa.getUrlImagem() != null) {
+
+                        final StorageReference imagemRef = storageReference
+                                .child("imagens")
+                                .child("Empresas")
+                                .child(empresa.getUrlImagem());
+                        imagemRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                // Got the download URL for 'users/me/profile.png'
+                                // Pass it to Picasso to download, show in ImageView and caching
+                                Picasso.get().load(uri.toString()).into(imagePerfilEmpresa);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle any errors
+                            }
+                        });
+                    }
                 }
 
             }
@@ -121,23 +169,31 @@ public class ConfigurarEmpresa extends AppCompatActivity {
 
         //Valida se os campos foram preenchidos
         String nome = editEmpresaNome.getText().toString();
-        String taxa = editEmpresaTaxa.getText().toString();
-        String categoria = editEmpresaCategoria.getText().toString();
-        String tempo = editEmpresaTempo.getText().toString();
+        String telefone = editEmpresaTel.getText().toString();
+        String cep = editEmpresaCEP.getText().toString();
+        String endereco = editEmpresaEndereco.getText().toString();
+        String bairro = editEmpresaBairro.getText().toString();
+        String cidade = editEmpresaCidade.getText().toString();
+        String estado = editEmpresaEstado.getText().toString();
+        String tempo = editEmpresaTempo.getText() != null?  editEmpresaTempo.getText().toString(): "";
 
 //        if( !nome.isEmpty()){
 //            if( !taxa.isEmpty()){
 //                if( !categoria.isEmpty()){
 //                    if( !tempo.isEmpty()){
-
-                        Empresa empresa = new Empresa();
-                        empresa.setId( idUsuarioLogado );
-//                        empresa.setNome( nome );
-//                        empresa.setPrecoEntrega( Double.parseDouble(taxa) );
-//                        empresa.setCategoria(categoria);
-//                        empresa.setTempo( tempo );
+                        empresa.setTempo( tempo );
+                        empresa.setNomeFantasia(nome);
+                        empresa.setTelefone(telefone);
+                        empresa.setEndereco(endereco);
+                        empresa.setCidade(cidade);
+                        empresa.setCep(cep);
+                        empresa.setBairro(bairro);
+                        empresa.setEstado(estado);
                         empresa.setUrlImagem( urlImagemSelecionada );
-                        empresa.addImagem();
+                        empresa.salvarEmpresa();
+//                        empresa.addImagem();
+        Toast.makeText(ConfigurarEmpresa.this, "Salvo com sucesso",
+                Toast.LENGTH_SHORT).show();
                         finish();
 
 //                    }else{
@@ -231,11 +287,18 @@ public class ConfigurarEmpresa extends AppCompatActivity {
     }
 
     private void inicializarComponentes(){
-        editEmpresaNome = findViewById(R.id.editEmpresaNome);
-        editEmpresaCategoria = findViewById(R.id.editEmpresaCategoria);
-        editEmpresaTaxa = findViewById(R.id.editEmpresaTaxa);
-        editEmpresaTempo = findViewById(R.id.editEmpresaTempo);
+        editEmpresaNome = findViewById(R.id.editTextNomeFantasiaConfig);
+        editEmpresaTel = findViewById(R.id.editTextTelefoneConfig);
+        editEmpresaTempo = findViewById(R.id.editTextNomeTempo);
+        editEmpresaCEP = findViewById(R.id.editTextCEPConfig);
+        editEmpresaEndereco = findViewById(R.id.editTextEnderecoConfig);
+        editEmpresaBairro = findViewById(R.id.editTextBairroConfig);
+        editEmpresaCidade = findViewById(R.id.editTextCidadeConfig);
+        editEmpresaEstado = findViewById(R.id.editTextEstadoConfig);
         imagePerfilEmpresa = findViewById(R.id.imagemPerfilEmpresa);
+
+
+
     }
 
 }
