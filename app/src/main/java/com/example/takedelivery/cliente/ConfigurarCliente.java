@@ -106,7 +106,7 @@ public class ConfigurarCliente extends AppCompatActivity {
                     cliente.setEmail(dataSnapshot.child("email").getValue().toString());
                     cliente.setSenha(dataSnapshot.child("senha").getValue().toString());
                     cliente.setTelefone(dataSnapshot.child("telefone").getValue().toString());
-                    cliente.setEndereco(dataSnapshot.child("endereco").getValue().toString());
+                    cliente.setEndereco(dataSnapshot.child("endereco").exists()? dataSnapshot.child("endereco").getValue().toString(): "");
                     cliente.setUrlImagem(dataSnapshot.child("urlImagem").exists()? dataSnapshot.child("urlImagem").getValue().toString(): "");
 
 

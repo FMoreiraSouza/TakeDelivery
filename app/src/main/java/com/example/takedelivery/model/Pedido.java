@@ -36,9 +36,12 @@ public class Pedido implements Serializable {
     public void salvar(DatabaseReference clientRef, DatabaseReference clienteRef){
         DatabaseReference pedidoRefEmp = clientRef.child("pedidos");
         DatabaseReference pedidoRefCli = clienteRef.child("pedidos");
-
-        String idPedidoFirebase = pedidoRefCli.push().getKey();
-        setId(idPedidoFirebase);
+        if(getId() == null){
+            String idPedidoFirebase = pedidoRefCli.push().getKey();
+            setId(idPedidoFirebase);
+        }
+//        String idPedidoFirebase = pedidoRefCli.push().getKey();
+//        setId(idPedidoFirebase);
         pedidoRefEmp.child( getId()).setValue( this );
         pedidoRefCli.child( getId()).setValue( this );
 

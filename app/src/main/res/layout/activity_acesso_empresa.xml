@@ -13,9 +13,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="70dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="97dp"
         android:backgroundTint="#D3F11616"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,7 +26,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <EditText
@@ -52,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal"/>
+                android:orientation="horizontal" />
 
             <Button
                 android:id="@+id/button"
@@ -76,32 +74,32 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="40dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="bottom"-->
+        <!--            android:layout_marginTop="40dp"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:orientation="vertical">-->
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:backgroundTint="#395693"
-                android:text="Login com o Facebook" />
-            <com.facebook.login.widget.LoginButton
-                android:layout_width="wrap_content"
-                android:layout_height="100dp" />
+        <!--            <Button-->
+        <!--                android:id="@+id/button2"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="55dp"-->
+        <!--                android:backgroundTint="#395693"-->
+        <!--                android:text="Login com o Facebook" />-->
+        <!--            <com.facebook.login.widget.LoginButton-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="100dp" />-->
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:backgroundTint="#4081EC"
-                android:text="Login com o google" />
+        <!--            <Button-->
+        <!--                android:id="@+id/button3"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="55dp"-->
+        <!--                android:backgroundTint="#4081EC"-->
+        <!--                android:text="Login com o google" />-->
 
-        </LinearLayout>
+        <!--        </LinearLayout>-->
 
     </LinearLayout>
 
@@ -109,10 +107,11 @@
         android:id="@+id/imageView4"
         android:layout_width="137dp"
         android:layout_height="80dp"
+        android:layout_marginTop="120dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/restaurant"
-        tools:layout_editor_absoluteY="52dp"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

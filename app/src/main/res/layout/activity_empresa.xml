@@ -24,7 +24,6 @@
             android:id="@+id/textViewNome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Delivery Menu"
             android:textColor="#040303"
             android:textSize="24sp"
             android:textStyle="bold" />

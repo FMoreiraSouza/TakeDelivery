@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.example.takedelivery.R;
 import com.example.takedelivery.firebase.ClienteFirebase;
+import com.example.takedelivery.firebase.CryptografiaBase64;
 import com.example.takedelivery.firebase.FirebaseItems;
 import com.example.takedelivery.model.Carrinho;
 import com.example.takedelivery.model.Cliente;
@@ -71,6 +72,7 @@ public class CarrinhoActivity extends AppCompatActivity {
             textViewPreco.setText(NumberFormat.getCurrencyInstance(ptBr).format(carrinho.getProduto().getPreco()));
             textViewTotal.setText(NumberFormat.getCurrencyInstance(ptBr).format(carrinho.getValorTotal()));
 
+            String idEmpresa = CryptografiaBase64.codificarBase64(carrinho.getEmpresa().getEmail());
             String identificadorCli = ClienteFirebase.getIdentificarCliente();
             database = FirebaseItems.getFirebaseDatabase();
             cliLogadoRef = database.child("Clientes")
@@ -78,7 +80,7 @@ public class CarrinhoActivity extends AppCompatActivity {
 
             carrinhoRef = cliLogadoRef.child("carrinho");
             empresaRef = database.child("Empresas")
-                    .child(carrinho.getEmpresa().getId());
+                    .child(idEmpresa);
         }
     }
     public void limparCarrinho(View view) {

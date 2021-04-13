@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.takedelivery.R;
+import com.example.takedelivery.acesso.AcessoCliente;
+import com.example.takedelivery.acesso.AcessoEmpresa;
 import com.example.takedelivery.firebase.EmpresaFirebase;
 import com.example.takedelivery.firebase.FirebaseItems;
 import com.example.takedelivery.model.Empresa;
@@ -27,6 +29,7 @@ import com.example.takedelivery.firebase.FirebaseOptions;
 import com.example.takedelivery.R;
 import com.example.takedelivery.firebase.CryptografiaBase64;
 import com.example.takedelivery.model.Produto;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -88,13 +91,18 @@ public class EmpresaActivity extends AppCompatActivity {
                 DefinirEmpresa(configurarempresa);
                 break;
             case R.id.sair:
+                sair();
                 break;
 
 
         }
         return true;
     }
+    public void sair(){
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(this, AcessoEmpresa.class));
 
+    }
     public void DefinirEmpresa(View view){
         Intent i  = new Intent(EmpresaActivity.this, ConfigurarEmpresa.class);
         startActivity(i);
@@ -121,7 +129,7 @@ public class EmpresaActivity extends AppCompatActivity {
     }
     public void verPedidosAndamento(View view){
         Intent intent = new Intent(this, PedidosEmpresaActivity.class);
-        intent.putExtra("status", "Preparando Pedido");
+        intent.putExtra("status", "Preparando pedido");
         startActivity(intent);
     }
 
@@ -159,6 +167,7 @@ public class EmpresaActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 nomeEmpresa = dataSnapshot.child("nomeFantasia").getValue().toString();
+                textViewNomeEmpresa.setText(nomeEmpresa);
             }
 
             @Override
@@ -175,7 +184,7 @@ public class EmpresaActivity extends AppCompatActivity {
                 pedidos.clear();
                 String dataHoje = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    if(dataHoje.equals(ds.child("data").getValue().toString())) {
+                    if(dataHoje.equals(ds.child("data").getValue().toString()) && !dataHoje.equals(ds.child("status").getValue().toString().equals("Pendente aprovação"))) {
                         pedidos.add(ds.getValue(Pedido.class));
                     }
                 }

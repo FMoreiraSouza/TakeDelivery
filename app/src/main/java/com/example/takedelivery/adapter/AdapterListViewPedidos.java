@@ -9,8 +9,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.takedelivery.R;
+import com.example.takedelivery.acesso.AcessoCliente;
 import com.example.takedelivery.firebase.CryptografiaBase64;
 import com.example.takedelivery.firebase.FirebaseItems;
 import com.example.takedelivery.model.Cliente;
@@ -84,7 +86,7 @@ public class AdapterListViewPedidos extends BaseAdapter {
         if(isEmpresa) {
             if (pedido.getStatus().equals("Pendente aprovação")) {
                 status.setText("Aprovar");
-            } else if (pedido.getStatus().equals("Preparando Pedido")) {
+            } else if (pedido.getStatus().equals("Preparando pedido")) {
                 status.setText("Liberar para entrega");
             }else if(pedido.getStatus().equals("Saiu para entrega")){
                 status.setText("Finalizar");
@@ -110,15 +112,20 @@ public class AdapterListViewPedidos extends BaseAdapter {
 
     }
     public void botaoMudaStatus(DatabaseReference empresaLogadaRef ){
-        String idCliente = CryptografiaBase64.codificarBase64( cliente.getEmail() );
+        String idCliente = CryptografiaBase64.codificarBase64( pedido.getCliente().getEmail() );
 //        DatabaseReference clienteRef = database.child("Clientes").child(pedido.getCliente().getID());
         DatabaseReference clienteRef = database.child("Clientes").child(idCliente);
 
         Pedido pedido = getItem(position);
-        if(pedido.getStatus().equals("Pendente aprovação")) pedido.setStatus("Preparando pedido");
-        if(pedido.getStatus().equals("Preparando pedido")) pedido.setStatus("Saiu para entrega");
-        if(pedido.getStatus().equals("Saiu para entrega")) pedido.setStatus("Finzalizado");
+        if(pedido.getStatus().equals("Pendente aprovação")) {
+            pedido.setStatus("Preparando pedido");
+        }else if(pedido.getStatus().equals("Preparando pedido")){
+            pedido.setStatus("Saiu para entrega");
+        }else if(pedido.getStatus().equals("Saiu para entrega")) {
+            pedido.setStatus("Finalizado");
+        }
 
         pedido.salvar(empresaLogadaRef, clienteRef);
+
     }
 }

@@ -18,6 +18,7 @@ import com.example.takedelivery.empresa.PedidosEmpresaActivity;
 import com.example.takedelivery.model.Empresa;
 import com.example.takedelivery.model.Pedido;
 import com.example.takedelivery.model.Produto;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import android.content.Intent;
@@ -138,12 +139,20 @@ public class ClienteActivity extends AppCompatActivity {
                 case R.id.pedidos :
                     verHistoricoPedidos();
                 break;
+            case R.id.sair:
+                sair();
+                break;
 
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    public void sair(){
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(this, AcessoCliente.class));
+
+    }
     /*private void deslogarUsuario(){
         try {
             autenticacao.signOut();
@@ -164,9 +173,6 @@ public class ClienteActivity extends AppCompatActivity {
         startActivity(new Intent(ClienteActivity.this, ConfigurarCliente.class));
     }
 
-    private void abrirNovoProduto(){
-        startActivity(new Intent(ClienteActivity.this, AdicionarProduto.class));
-    }
 
 
 
@@ -269,9 +275,7 @@ public class ClienteActivity extends AppCompatActivity {
                 cliente.setEmail(dataSnapshot.child("email").getValue().toString());
                 cliente.setSenha(dataSnapshot.child("senha").getValue().toString());
                 cliente.setTelefone(dataSnapshot.child("telefone").getValue().toString());
-                cliente.setCidade(dataSnapshot.child("cidade").getValue().toString());
-                cliente.setBairro(dataSnapshot.child("bairro").getValue().toString());
-                cliente.setEndereco(dataSnapshot.child("endereco").getValue().toString());
+                cliente.setEndereco(dataSnapshot.child("endereco").exists()? dataSnapshot.child("endereco").getValue().toString(): "");
                 cliente.setUrlImagem(dataSnapshot.child("urlImagem").exists()? dataSnapshot.child("urlImagem").getValue().toString(): "");
 
             }
