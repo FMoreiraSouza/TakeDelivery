@@ -91,32 +91,32 @@ public class CadastroEmpresa extends AppCompatActivity {
         editTextCnpj = findViewById( R.id.editTextCNPJ );
         editTextNomeFantasia = findViewById( R.id.editTextNomeFantasia );
         editTextTelefone = findViewById( R.id.editTextTelefone );
-        editTextCep = findViewById( R.id.editTextCEP );
-        editTextEstado = findViewById( R.id.editTextEstado );
-        editTextCidade = findViewById( R.id.editTextCidade );
-        editTextBairro = findViewById( R.id.editTextBairro );
-        editTextEndereco = findViewById( R.id.editTextEndereco );
-        editTextNumero = findViewById( R.id.editTextNumero );
+        //editTextCep = findViewById( R.id.editTextCEP );
+        //editTextEstado = findViewById( R.id.editTextEstado );
+        //editTextCidade = findViewById( R.id.editTextCidade );
+        //editTextBairro = findViewById( R.id.editTextBairro );
+        //editTextEndereco = findViewById( R.id.editTextEndereco );
+        //editTextNumero = findViewById( R.id.editTextNumero );
 
         String cnpj = editTextCnpj.getText().toString();;
         String nomeFantasia = editTextNomeFantasia.getText().toString();;
         String telefone = editTextTelefone.getText().toString();;
-        String cep = editTextCep.getText().toString();;
-        String estado = editTextEstado.getText().toString();;
-        String cidade = editTextCidade.getText().toString();;
-        String bairro = editTextBairro.getText().toString();;
-        String endereco = editTextEndereco.getText().toString();;
-        String numero = editTextNumero.getText().toString();
+       // String cep = editTextCep.getText().toString();;
+       // String estado = editTextEstado.getText().toString();;
+       // String cidade = editTextCidade.getText().toString();;
+       // String bairro = editTextBairro.getText().toString();;
+       // String endereco = editTextEndereco.getText().toString();;
+       // String numero = editTextNumero.getText().toString();
 
         empresa.setCnpj(cnpj);
         empresa.setNomeFantasia(nomeFantasia);
         empresa.setTelefone(telefone);
-        empresa.setCep(cep);
-        empresa.setEstado(estado);
-        empresa.setCidade(cidade);
-        empresa.setBairro(bairro);
-        empresa.setEndereco(endereco);
-        empresa.setNumero(numero);
+        //empresa.setCep(cep);
+        //empresa.setEstado(estado);
+        //empresa.setCidade(cidade);
+        //empresa.setBairro(bairro);
+        //empresa.setEndereco(endereco);
+        //empresa.setNumero(numero);
 
         empresa.salvarEmpresa();
 

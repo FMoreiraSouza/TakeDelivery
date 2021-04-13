@@ -106,14 +106,14 @@ public class AcessoEmpresa extends AppCompatActivity {
 
     }
 //
-    @Override
+    /*@Override
     protected void onStart() {
         super.onStart();
         FirebaseUser usuarioAtual = autenticar.getCurrentUser();
         if ( usuarioAtual != null ){
             abrirTelaEmpresa();
         }
-    }
+    }*/
 
     public void abrirTelaCadastro(View view) {
         Intent intent = new Intent(AcessoEmpresa.this, CadastroInicialEmpresa.class);

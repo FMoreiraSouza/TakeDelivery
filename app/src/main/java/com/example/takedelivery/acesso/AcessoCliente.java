@@ -9,21 +9,17 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.takedelivery.cliente.CadastroCliente;
+import com.example.takedelivery.cliente.CadastroInicialCliente;
 import com.example.takedelivery.cliente.ClienteActivity;
 import com.example.takedelivery.firebase.FirebaseOptions;
 import com.example.takedelivery.R;
 import com.example.takedelivery.model.Cliente;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseUser;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 
 
 public class AcessoCliente extends AppCompatActivity {
@@ -124,7 +120,7 @@ public class AcessoCliente extends AppCompatActivity {
 //    }
 
     public void abrirTelaCadastro(View view) {
-        Intent intent = new Intent(AcessoCliente.this, CadastroCliente.class);
+        Intent intent = new Intent(AcessoCliente.this, CadastroInicialCliente.class);
         startActivity(intent);
     }
 
