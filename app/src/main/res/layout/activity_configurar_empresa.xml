@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".empresa.ConfigurarEmpresa">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="100dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imagemPerfilEmpresa"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_gravity="center"
+            android:src="@drawable/restaurant"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+
+        <EditText
+            android:id="@+id/editNomeResp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+
+        <EditText
+            android:id="@+id/editEmpresaNome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Nome empresa"
+            android:inputType="text"
+            android:padding="16dp" />
+
+
+        <EditText
+            android:id="@+id/editEmpresaCategoria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-2dp"
+            android:ems="10"
+            android:hint="Categoria"
+            android:inputType="text"
+            android:padding="16dp" />
+
+        <EditText
+            android:id="@+id/editEmpresaTempo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-2dp"
+            android:ems="10"
+            android:hint="Tempo entrega"
+            android:inputType="text"
+            android:padding="16dp" />
+
+        <EditText
+            android:id="@+id/editEmpresaTaxa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-2dp"
+            android:ems="10"
+            android:hint="Taxa entrega"
+            android:inputType="numberDecimal"
+            android:padding="16dp" />
+
+        <Button
+            android:id="@+id/buttonAcesso2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="validarDadosEmpresa"
+            android:padding="16dp"
+            android:text="Salvar" />
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

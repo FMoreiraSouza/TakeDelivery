@@ -14,6 +14,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import androidx.fragment.app.FragmentActivity;
+
+import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -30,6 +33,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     };
     private LocationManager locationManager;
     private LocationListener locationListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +83,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             );
         }
 
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -104,6 +109,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

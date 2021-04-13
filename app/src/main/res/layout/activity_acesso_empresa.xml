@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:backgroundTint="#F7F7F7"
-    tools:context=".AcessoEmpresa">
+    tools:context=".acesso.AcessoEmpresa">
+
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -89,6 +90,9 @@
                 android:layout_height="55dp"
                 android:backgroundTint="#395693"
                 android:text="Login com o Facebook" />
+            <com.facebook.login.widget.LoginButton
+                android:layout_width="wrap_content"
+                android:layout_height="100dp" />
 
             <Button
                 android:id="@+id/button3"
@@ -108,8 +112,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/restaurant"
-        tools:layout_editor_absoluteY="52dp" />
+        tools:layout_editor_absoluteY="52dp"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
