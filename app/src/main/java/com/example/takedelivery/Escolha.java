@@ -65,7 +65,8 @@ public class Escolha extends AppCompatActivity {
     }
 
     public void abrirAcessoCliente(View view){
-        Intent i  = new Intent(Escolha.this, CadastroCliente.class);
+        Intent i  = new Intent(Escolha.this, AcessoCliente.class);
+
         startActivity(i);
         finish();
     }

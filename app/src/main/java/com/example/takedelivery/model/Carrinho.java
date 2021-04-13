@@ -63,13 +63,6 @@ public class Carrinho implements Serializable {
         this.produto = produto;
     }
 
-    public Produto getProdutos() {
-        return produto;
-    }
-
-    public void setProdutos(Produto produto) {
-        this.produto = produto;
-    }
 
     public Float getValorTotal() {
         return valorTotal;
