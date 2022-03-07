@@ -21,7 +21,10 @@ Aplicativo de cadastro de clientes e empresas com as mais variadas funções de 
  - Instale o Android Studio;
   - Acessar a pasta *bin* pelo o terminal de comando e executar o arquivo studio.sh com o comando "./studio.sh";
     - Abrir este projeto.
- - Criar uma conta na [Firebase](https://firebase.google.com/?hl=pt) e ir para o console para adicionar este projeto e assim poder armazenar os dados de login e produtos;
+ - Criar uma conta na [Firebase](https://firebase.google.com/?hl=pt) e, assim, poder armazenar dados de login e produtos;
+    -  I para o console para adicionar este projeto;
+    -  Clicar no símbolo do Android e registrar o app
+    -  Mover o arquivo google-services.json para o diretório raiz do app.
  - Acessar a [Google Cloud Platform](https://console.developers.google.com/) e criar uma conta para o serviço de geolocalização;
  
   
