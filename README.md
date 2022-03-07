@@ -12,6 +12,8 @@ Aplicativo de cadastro de clientes e empresas com as mais variadas funções de 
 - Sistemas Operacionais:
   - Para computadores ou notebooks: Qualquer distribuição Linux (*recomendável*)
   - Para Smartphones: Android
+  - Armazenamento de dados: Firebase
+  - Serviços de geolocalização: Google Cloud
  
   
 
