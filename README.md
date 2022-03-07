@@ -19,13 +19,12 @@ Aplicativo de cadastro de clientes e empresas com as mais variadas funções de 
   
  - Instale a JDK;
  - Instale o Android Studio;
-  - Acessar a pasta *bin* pelo o terminal de comando e executar o arquivo studio.sh com o comando ```"./studio.sh"```;
-    - Abrir este projeto.
- - Criar uma conta na [Firebase](https://firebase.google.com/?hl=pt) e, assim, poder armazenar dados de login e produtos;
-    -  Ir para o console para adicionar este projeto;
-    -  Clicar no símbolo do Android e registrar o app;
-    -  Mover o arquivo "google-services.json" para o diretório raiz do app.
- - Acessar a [Google Cloud Platform](https://console.developers.google.com/) e criar uma conta para o serviço de geolocalização;
+  - Acessar a pasta *bin* pelo o terminal de comando e executar o arquivo studio.sh com o comando ```"./studio.sh"```.
+    - Abrir este projeto;
+    - Acessar "Device manager" para criar os dois emuladores android para execução de ambos cliente e empresa;
+    - Clicar em "Select Multiple devices" e então, executar o app.
+    
+![Execução do aplicativo](https://github.com/Fmoreira12/TakeDelivery/blob/master/Emuladores%20Android.png)
  
   
 
